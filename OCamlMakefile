@@ -513,7 +513,7 @@ CINCFLAGS += $(SOURCE_DIRS:%=-I%) $(INCDIRS:%=-I%) $(OCAML_DEFAULT_DIRS:%=-I%)
 
 ifndef MSVC
 CLIBFLAGS += $(SOURCE_DIRS:%=-L%) $(LIBDIRS:%=-L%) \
-             $(EXTLIBDIRS:%=-L%) $(EXTLIBDIRS:%=-Wl,$(RPATH_FLAG)%) \
+             $(EXTLIBDIRS:%=-L%) $(EXTLIBDIRS:%=-dllpath %) \
              $(OCAML_DEFAULT_DIRS:%=-L%)
 endif
 

@@ -1,3 +1,6 @@
+2006-09-15: Added a partial fix for MacOS X problems concerning shared
+            libraries.
+
 2006-07-07: Fixed a linking problem with packed libraries.
 
             Thanks to John D. Ramsdell <ramsdell@mitre.org> for the patch!
