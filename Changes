@@ -1,4 +1,4 @@
-2005-12-09: Fixed a linking problem with packed libraries.
+2006-07-07: Fixed a linking problem with packed libraries.
 
             Thanks to John D. Ramsdell <ramsdell@mitre.org> for the patch!
 
