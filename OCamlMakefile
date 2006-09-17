@@ -153,7 +153,11 @@ export LDFLAGS
 export CPPFLAGS
 
 ifndef RPATH_FLAG
-  RPATH_FLAG := -R
+  ifdef ELF_RPATH_FLAG
+    RPATH_FLAG := $(ELF_RPATH_FLAG)
+  else
+    RPATH_FLAG := -R
+  endif
 endif
 export RPATH_FLAG
 
@@ -512,9 +516,12 @@ INCFLAGS := $(DINCFLAGS) $(INCDIRS:%=-I %)
 CINCFLAGS += $(SOURCE_DIRS:%=-I%) $(INCDIRS:%=-I%) $(OCAML_DEFAULT_DIRS:%=-I%)
 
 ifndef MSVC
-CLIBFLAGS += $(SOURCE_DIRS:%=-L%) $(LIBDIRS:%=-L%) \
-             $(EXTLIBDIRS:%=-L%) $(EXTLIBDIRS:%=-dllpath %) \
-             $(OCAML_DEFAULT_DIRS:%=-L%)
+  CLIBFLAGS += $(SOURCE_DIRS:%=-L%) $(LIBDIRS:%=-L%) \
+               $(EXTLIBDIRS:%=-L%) $(OCAML_DEFAULT_DIRS:%=-L%)
+
+  ifeq ($(ELF_RPATH), yes)
+    CLIBFLAGS += $(EXTLIBDIRS:%=-Wl,$(RPATH_FLAG)%)
+  endif
 endif
 
 ifndef PROFILING
@@ -533,14 +540,17 @@ else
 endif
 
 ifndef MSVC
-COMMON_LDFLAGS := $(LDFLAGS:%=-ccopt %) $(SOURCE_DIRS:%=-ccopt -L%) \
-		  $(LIBDIRS:%=-ccopt -L%) $(EXTLIBDIRS:%=-ccopt -L%) \
-		  $(EXTLIBDIRS:%=-ccopt -Wl,$(RPATH_FLAG)%) \
-		  $(OCAML_DEFAULT_DIRS:%=-ccopt -L%)
+  COMMON_LDFLAGS := $(LDFLAGS:%=-ccopt %) $(SOURCE_DIRS:%=-ccopt -L%) \
+		    $(LIBDIRS:%=-ccopt -L%) $(EXTLIBDIRS:%=-ccopt -L%) \
+		    $(EXTLIBDIRS:%=-ccopt -Wl $(OCAML_DEFAULT_DIRS:%=-ccopt -L%))
+
+  ifeq ($(ELF_RPATH),yes)
+    COMMON_LDFLAGS += $(EXTLIBDIRS:%=-ccopt -Wl,$(RPATH_FLAG)%)
+  endif
 else
-COMMON_LDFLAGS := -ccopt "/link -NODEFAULTLIB:LIBC $(LDFLAGS:%=%) $(SOURCE_DIRS:%=-LIBPATH:%) \
-		  $(LIBDIRS:%=-LIBPATH:%) $(EXTLIBDIRS:%=-LIBPATH:%) \
-		  $(OCAML_DEFAULT_DIRS:%=-LIBPATH:%) "
+  COMMON_LDFLAGS := -ccopt "/link -NODEFAULTLIB:LIBC $(LDFLAGS:%=%) $(SOURCE_DIRS:%=-LIBPATH:%) \
+		    $(LIBDIRS:%=-LIBPATH:%) $(EXTLIBDIRS:%=-LIBPATH:%) \
+		    $(OCAML_DEFAULT_DIRS:%=-LIBPATH:%) "
 endif
 
 CLIBS_OPTS := $(CLIBS:%=-cclib -l%)
@@ -1012,7 +1022,7 @@ endif
 .c.$(EXT_OBJ):
 			$(OCAMLC) -c -cc "$(CC)" -ccopt "$(CFLAGS) \
 				$(CPPFLAGS) $(CPPFLAGS_WIN32) \
-				$(CFLAGS_WIN32) $(CINCFLAGS) $(CFLAG_O)$@ " $< 
+				$(CFLAGS_WIN32) $(CINCFLAGS) $(CFLAG_O)$@ " $<
 
 .$(EXT_CXX).$(EXT_OBJ):
 			$(CXX) -c $(CXXFLAGS) $(CINCFLAGS) $(CPPFLAGS) \

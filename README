@@ -522,6 +522,13 @@ The endings of the dependency files are: "%.d" for those generated from
                     dynamic libraries.  May need to be set by user on
                     exotic platforms.  (default: "-R").
 
+  * ELF_RPATH_FLAG - this flag is used to set the rpath on ELF-platforms.
+                     (default: "-R")
+
+  * ELF_RPATH     - if this flag is "yes", then the RPATH_FLAG will be
+                    passed by "-Wl" to the linker as normal on
+                    ELF-platforms.
+
   * OCAMLLIBPATH  - path to the OCaml-standard-libraries
                     (first default: `$(OCAMLC) -where`)
                     (second default: "/usr/local/lib/ocaml")
@@ -612,7 +619,7 @@ found at:
 
 Enjoy!
 
-Vienna, 2005-10-24
+Vienna, 2006-09-16
 Markus Mottl
 
 e-mail: markus.mottl@gmail.com
