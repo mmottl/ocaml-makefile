@@ -180,10 +180,10 @@ between parenthesis:
    * profiling-native-code-library (pncl)
    * byte-code-dll                 (bcd)
    * native-code-dll               (ncd)
-   * pack-byte-code              (pabc)
-   * pack-native-code            (panc)
+   * pack-byte-code                (pabc)
+   * pack-native-code              (panc)
    * toplevel interpreter          (top)
-   * subprjs
+   * subprojs
 
 Here a short note concerning building and linking byte code libraries
 with C-files:
@@ -359,12 +359,17 @@ The endings of the dependency files are: "%.d" for those generated from
   settings specific to each project by using variables of the form
   "PROJ_p1", "PROJ_p2", etc.  E.g.:
 
-    export PROJ_p1 = \
-      SOURCES="foo.ml main.ml" \
-      RESULT="p1" \
+    define PROJ_p1
+      SOURCES="foo.ml main.ml"
+      RESULT="p1"
       OCAMLFLAGS="-unsafe"
+    endef
+    export PROJ_p1
 
-    export PROJ_p2 = ...
+    define PROJ_p2
+      ...
+    endef
+    export PROJ_p2
 
   You may also export common settings used by all projects directly, e.g.
   "export THREADS = y".
@@ -393,7 +398,7 @@ The endings of the dependency files are: "%.d" for those generated from
   OCAMLMAKEFILE has been defined appropriately):
 
     %:
-            @make -f $(OCAMLMAKEFILE) subprjs SUBTARGET=$@
+            @make -f $(OCAMLMAKEFILE) subprojs SUBTARGET=$@
 
   See the "threads"-directory in the distribution for a short example!
 
@@ -619,7 +624,7 @@ found at:
 
 Enjoy!
 
-Vienna, 2006-09-16
+Vienna, 2006-09-18
 Markus Mottl
 
 e-mail: markus.mottl@gmail.com

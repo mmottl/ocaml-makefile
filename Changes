@@ -1,3 +1,5 @@
+2006-09-18: Fixed documentation bugs in the README.
+
 2006-09-16: Added better support for ELF-platforms (especially with Godi).
 
 2006-09-15: Added a partial fix for MacOS X problems concerning shared
