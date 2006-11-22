@@ -478,6 +478,8 @@ The endings of the dependency files are: "%.d" for those generated from
   * DOC_FILES     - names of files from which documentation is generated.
                     (default: all .mli-files in your $(SOURCES)).
 
+  * DOC_DIR       - name of directory where documentation should be stored.
+
   * OCAMLFLAGS    - flags passed to the compilers
   * OCAMLBCFLAGS  - flags passed to the byte code compiler only
   * OCAMLNCFLAGS  - flags passed to the native code compiler only
@@ -624,7 +626,7 @@ found at:
 
 Enjoy!
 
-Vienna, 2006-09-18
+New York, 2006-11-22
 Markus Mottl
 
 e-mail: markus.mottl@gmail.com

@@ -1,3 +1,10 @@
+2006-11-22: New variable:
+
+              * DOC_DIR
+
+            Thanks to Prashanth Mundkur <prashanth.mundkur@gmail.com>
+            for the suggestion!
+
 2006-09-18: Fixed documentation bugs in the README.
 
 2006-09-16: Added better support for ELF-platforms (especially with Godi).

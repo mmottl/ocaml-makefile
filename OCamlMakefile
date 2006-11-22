@@ -75,8 +75,12 @@ export OCAMLBLDFLAGS
 ifndef OCAMLCPFLAGS
   OCAMLCPFLAGS := a
 endif
-
 export OCAMLCPFLAGS
+
+ifndef DOC_DIR
+  DOC_DIR := doc
+endif
+export DOC_DIR
 
 export PPFLAGS
 
@@ -837,16 +841,16 @@ pack-native-code:		$(PRE_TARGETS)
 panc:	pack-native-code
 
 # generates HTML-documentation
-htdoc:	doc/$(RESULT)/html
+htdoc:	$(DOC_DIR)/$(RESULT)/html
 
 # generates Latex-documentation
-ladoc:	doc/$(RESULT)/latex
+ladoc:	$(DOC_DIR)/$(RESULT)/latex
 
 # generates PostScript-documentation
-psdoc:	doc/$(RESULT)/latex/doc.ps
+psdoc:	$(DOC_DIR)/$(RESULT)/latex/doc.ps
 
 # generates PDF-documentation
-pdfdoc:	doc/$(RESULT)/latex/doc.pdf
+pdfdoc:	$(DOC_DIR)/$(RESULT)/latex/doc.pdf
 
 # generates all supported forms of documentation
 doc: htdoc ladoc psdoc pdfdoc
@@ -1057,7 +1061,7 @@ $(BCDIDIR)/%.di $(NCDIDIR)/%.di:	%.mli
 			    -pp "$$pp $(PPFLAGS)" $(DINCFLAGS) $< > $@; \
 			fi
 
-doc/$(RESULT)/html: $(DOC_FILES)
+$(DOC_DIR)/$(RESULT)/html: $(DOC_FILES)
 	rm -rf $@
 	mkdir -p $@
 	$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
@@ -1071,7 +1075,7 @@ doc/$(RESULT)/html: $(DOC_FILES)
 	  	$(INCFLAGS) $(DOC_FILES); \
 	fi
 
-doc/$(RESULT)/latex: $(DOC_FILES)
+$(DOC_DIR)/$(RESULT)/latex: $(DOC_FILES)
 	rm -rf $@
 	mkdir -p $@
 	$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
@@ -1087,14 +1091,14 @@ doc/$(RESULT)/latex: $(DOC_FILES)
 	  	$(INCFLAGS) $(DOC_FILES) -o $@/doc.tex; \
 	fi
 
-doc/$(RESULT)/latex/doc.ps: doc/$(RESULT)/latex
-	cd doc/$(RESULT)/latex && \
+$(DOC_DIR)/$(RESULT)/latex/doc.ps: $(DOC_DIR)/$(RESULT)/latex
+	cd $(DOC_DIR)/$(RESULT)/latex && \
 	  $(LATEX) doc.tex && \
 	  $(LATEX) doc.tex && \
 	  $(DVIPS) $(DVIPSFLAGS) doc.dvi -o $(@F)
 
-doc/$(RESULT)/latex/doc.pdf: doc/$(RESULT)/latex/doc.ps
-	cd doc/$(RESULT)/latex && $(PS2PDF) $(<F)
+$(DOC_DIR)/$(RESULT)/latex/doc.pdf: $(DOC_DIR)/$(RESULT)/latex/doc.ps
+	cd $(DOC_DIR)/$(RESULT)/latex && $(PS2PDF) $(<F)
 
 define make_subproj
 .PHONY:
@@ -1157,7 +1161,7 @@ cleanup::
 
 .PHONY: clean-doc
 clean-doc::
-	rm -rf doc
+	rm -rf $(DOC_DIR)/html $(DOC_DIR)/latex $(DOC_DIR)/dot
 
 .PHONY: nobackup
 nobackup:
