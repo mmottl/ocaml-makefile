@@ -1066,12 +1066,12 @@ $(DOC_DIR)/$(RESULT)/html: $(DOC_FILES)
 	mkdir -p $@
 	$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
 	if [ -z "$$pp" ]; then \
-	  echo $(OCAMLDOC) -html -d $@ $(OCAMLDOCFLAGS) $(INCFLAGS) $(DOC_FILES); \
-	  $(OCAMLDOC) -html -d $@ $(OCAMLDOCFLAGS) $(INCFLAGS) $(DOC_FILES); \
+	  echo $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -html -d $@ $(OCAMLDOCFLAGS) $(INCFLAGS) $(DOC_FILES); \
+	  $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -html -d $@ $(OCAMLDOCFLAGS) $(INCFLAGS) $(DOC_FILES); \
 	else \
-	  echo $(OCAMLDOC) -pp \"$$pp $(PPFLAGS)\" -html -d $@ $(OCAMLDOCFLAGS) \
+	  echo $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -pp \"$$pp $(PPFLAGS)\" -html -d $@ $(OCAMLDOCFLAGS) \
 	  	$(INCFLAGS) $(DOC_FILES); \
-	  $(OCAMLDOC) -pp "$$pp $(PPFLAGS)" -html -d $@ $(OCAMLDOCFLAGS) \
+	  $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -pp "$$pp $(PPFLAGS)" -html -d $@ $(OCAMLDOCFLAGS) \
 	  	$(INCFLAGS) $(DOC_FILES); \
 	fi
 
@@ -1080,14 +1080,14 @@ $(DOC_DIR)/$(RESULT)/latex: $(DOC_FILES)
 	mkdir -p $@
 	$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
 	if [ -z "$$pp" ]; then \
-	  echo $(OCAMLDOC) -latex $(OCAMLDOCFLAGS) $(INCFLAGS) \
+	  echo $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -latex $(OCAMLDOCFLAGS) $(INCFLAGS) \
 	  	$(DOC_FILES) -o $@/doc.tex; \
-	  $(OCAMLDOC) -latex $(OCAMLDOCFLAGS) $(INCFLAGS) $(DOC_FILES) \
+	  $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -latex $(OCAMLDOCFLAGS) $(INCFLAGS) $(DOC_FILES) \
 	  	-o $@/doc.tex; \
 	else \
-	  echo $(OCAMLDOC) -pp \"$$pp $(PPFLAGS)\" -latex $(OCAMLDOCFLAGS) \
+	  echo $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -pp \"$$pp $(PPFLAGS)\" -latex $(OCAMLDOCFLAGS) \
 	  	$(INCFLAGS) $(DOC_FILES) -o $@/doc.tex; \
-	  $(OCAMLDOC) -pp "$$pp $(PPFLAGS)" -latex $(OCAMLDOCFLAGS) \
+	  $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -pp "$$pp $(PPFLAGS)" -latex $(OCAMLDOCFLAGS) \
 	  	$(INCFLAGS) $(DOC_FILES) -o $@/doc.tex; \
 	fi
 
@@ -1147,7 +1147,7 @@ rawuninstall:
 	$(QUIET)printf "\nUninstallation successful.\n"
 
 ###########################################################################
-# MAINTAINANCE RULES
+# MAINTENANCE RULES
 
 .PHONY:	clean
 clean::
@@ -1161,7 +1161,10 @@ cleanup::
 
 .PHONY: clean-doc
 clean-doc::
-	rm -rf $(DOC_DIR)/html $(DOC_DIR)/latex $(DOC_DIR)/dot
+	rm -rf $(DOC_DIR)/$(RESULT)/html $(DOC_DIR)/$(RESULT)/latex $(DOC_DIR)/$(RESULT)/dot
+
+.PHONY: clean-all
+clean-all:: clean clean-doc
 
 .PHONY: nobackup
 nobackup:

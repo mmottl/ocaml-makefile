@@ -1,3 +1,9 @@
+2006-11-30: Improved documentation generation with "ocamldoc" + "ocamlfind".
+            Fixed a bug in the clean target for documentation.
+            Added a new "clean-all" target that also removes documentation.
+
+            Thanks to Denis Bueno <dbueno@gmail.com> for the patch!
+
 2006-11-22: New variable:
 
               * DOC_DIR
