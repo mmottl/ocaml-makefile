@@ -1,3 +1,11 @@
+2006-12-21: Added support for Objective-C.
+
+            New variable:
+
+              * CFRAMEWORKS
+
+            Thanks to Joe Groff <arcata@gmail.com> for the patch!
+
 2006-11-30: Improved documentation generation with "ocamldoc" + "ocamlfind".
             Fixed a bug in the clean target for documentation.
             Added a new "clean-all" target that also removes documentation.

@@ -1,7 +1,7 @@
 ---------------------------------------------------------------------------
 
                         Distribution of "ocaml_make"
-     Copyright (C) 1999 - 2005  Markus Mottl - free to copy and modify!
+     Copyright (C) 1999 - 2006  Markus Mottl - free to copy and modify!
                            USE AT YOUR OWN RISK!
 
 ---------------------------------------------------------------------------
@@ -523,6 +523,8 @@ The endings of the dependency files are: "%.d" for those generated from
 
   * CPPFLAGS      - additional flags passed to the C-preprocessor.
 
+  * CFRAMEWORKS   - Objective-C framework to pass to linker.
+
   * LDFLAGS       - additional flags passed to the C-linker
 
   * RPATH_FLAG    - flag passed through to the C-linker to set a path for
@@ -626,7 +628,7 @@ found at:
 
 Enjoy!
 
-New York, 2006-11-22
+New York, 2006-12-21
 Markus Mottl
 
 e-mail: markus.mottl@gmail.com
