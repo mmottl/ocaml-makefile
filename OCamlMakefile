@@ -1168,7 +1168,7 @@ cleanup::
 
 .PHONY: clean-doc
 clean-doc::
-	rm -rf $(DOC_DIR)/$(RESULT)/html $(DOC_DIR)/$(RESULT)/latex $(DOC_DIR)/$(RESULT)/dot
+	rm -rf $(DOC_DIR)/$(RESULT)
 
 .PHONY: clean-all
 clean-all:: clean clean-doc

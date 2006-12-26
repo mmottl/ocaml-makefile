@@ -1,3 +1,5 @@
+2006-12-26: Improved clean-doc target.
+
 2006-12-21: Added support for Apple's Objective-C application framework.
 
             New variable:
