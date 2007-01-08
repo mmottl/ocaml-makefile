@@ -1,3 +1,8 @@
+2007-01-08: Further improvements to generation of documentation.
+
+            Thanks to Prashanth Mundkur <prashanth.mundkur@gmail.com>
+            for the patch!
+
 2007-01-08: Fixed a linking bug with libraries: OCAML{B,N}LDFLAGS were
             doubled during the linking stage of library creation, which
             may cause problems in certain cases.
