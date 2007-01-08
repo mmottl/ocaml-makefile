@@ -489,6 +489,8 @@ The endings of the dependency files are: "%.d" for those generated from
   * OCAMLNLDFLAGS - flags passed to the OCaml-linker when linking
                     native code
 
+  * OCAMLMKLIB_FLAGS - flags passed to the OCaml library tool
+
   * OCAMLCPFLAGS  - profiling flags passed to "ocamlcp" (default: "a")
 
   * PPFLAGS       - additional flags passed to the preprocessor (default: none)
@@ -628,7 +630,7 @@ found at:
 
 Enjoy!
 
-New York, 2006-12-21
+New York, 2007-01-08
 Markus Mottl
 
 e-mail: markus.mottl@gmail.com

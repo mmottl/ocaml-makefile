@@ -3,6 +3,8 @@
             Thanks to Prashanth Mundkur <prashanth.mundkur@gmail.com>
             for the patch!
 
+            Added documentation for OCAMLMKLIB_FLAGS.
+
 2006-12-26: Improved clean-doc target.
 
 2006-12-21: Added support for Apple's Objective-C application framework.
