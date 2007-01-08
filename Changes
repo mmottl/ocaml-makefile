@@ -1,3 +1,10 @@
+2007-01-08: Fixed a linking bug with libraries: OCAML{B,N}LDFLAGS were
+            doubled during the linking stage of library creation, which
+            may cause problems in certain cases.
+
+            Thanks to Anastasia Gornostaeva <ermine@ermine.pp.ru> for
+            the hint!
+
 2007-01-08: Improved building of html-documentation.
 
             Thanks to Prashanth Mundkur <prashanth.mundkur@gmail.com>
