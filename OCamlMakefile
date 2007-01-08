@@ -843,7 +843,7 @@ pack-native-code:		$(PRE_TARGETS)
 panc:	pack-native-code
 
 # generates HTML-documentation
-htdoc:	$(DOC_DIR)/$(RESULT)/html
+htdoc:	$(DOC_DIR)/$(RESULT)/html/index.html
 
 # generates Latex-documentation
 ladoc:	$(DOC_DIR)/$(RESULT)/latex
@@ -1068,17 +1068,19 @@ $(BCDIDIR)/%.di $(NCDIDIR)/%.di:	%.mli
 			    -pp "$$pp $(PPFLAGS)" $(DINCFLAGS) $< > $@; \
 			fi
 
-$(DOC_DIR)/$(RESULT)/html: $(DOC_FILES)
-	rm -rf $@
+$(DOC_DIR)/$(RESULT)/html:
 	mkdir -p $@
+
+$(DOC_DIR)/$(RESULT)/html/index.html: $(DOC_DIR)/$(RESULT)/html $(DOC_FILES)
+	rm -rf $</*
 	$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
 	if [ -z "$$pp" ]; then \
-	  echo $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -html -d $@ $(OCAMLDOCFLAGS) $(INCFLAGS) $(DOC_FILES); \
-	  $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -html -d $@ $(OCAMLDOCFLAGS) $(INCFLAGS) $(DOC_FILES); \
+	  echo $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -html -d $< $(OCAMLDOCFLAGS) $(INCFLAGS) $(DOC_FILES); \
+	  $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -html -d $< $(OCAMLDOCFLAGS) $(INCFLAGS) $(DOC_FILES); \
 	else \
-	  echo $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -pp \"$$pp $(PPFLAGS)\" -html -d $@ $(OCAMLDOCFLAGS) \
+	  echo $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -pp \"$$pp $(PPFLAGS)\" -html -d $< $(OCAMLDOCFLAGS) \
 	  	$(INCFLAGS) $(DOC_FILES); \
-	  $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -pp "$$pp $(PPFLAGS)" -html -d $@ $(OCAMLDOCFLAGS) \
+	  $(REAL_OCAMLFIND) $(OCAMLDOC) $(OCAML_FIND_PACKAGES) -pp "$$pp $(PPFLAGS)" -html -d $< $(OCAMLDOCFLAGS) \
 	  	$(INCFLAGS) $(DOC_FILES); \
 	fi
 
