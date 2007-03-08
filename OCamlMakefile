@@ -27,7 +27,7 @@ export RES_CLIB_SUF
 ifndef RESULT
   RESULT := foo
 endif
-export RESULT
+export RESULT := $(strip $(RESULT))
 
 export LIB_PACK_NAME
 

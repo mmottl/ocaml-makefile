@@ -1,3 +1,5 @@
+2007-03-07: Fixed case when RESULT has trailing whitespace.
+
 2007-01-08: Further improvements to generation of documentation.
 
             Thanks to Prashanth Mundkur <prashanth.mundkur@gmail.com>
