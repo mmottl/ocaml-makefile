@@ -1,11 +1,9 @@
 ###########################################################################
 #                              OCamlMakefile
-#                  Copyright (C) 1999-2004  Markus Mottl
+#                  Copyright (C) 1999-2007  Markus Mottl
 #
 #                             For updates see:
 #                http://www.ocaml.info/home/ocaml_sources.html
-#
-#        $Id: OCamlMakefile,v 1.72 2005/12/09 15:30:50 mottl Exp $
 #
 ###########################################################################
 
