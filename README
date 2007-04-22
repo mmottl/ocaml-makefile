@@ -495,6 +495,7 @@ The endings of the dependency files are: "%.d" for those generated from
 
   * PPFLAGS       - additional flags passed to the preprocessor (default: none)
 
+  * LFLAGS        - flags passed to "ocamllex"
   * YFLAGS        - flags passed to "ocamlyacc"
   * IDLFLAGS      - flags passed to "camlidl"
 
@@ -590,6 +591,8 @@ The endings of the dependency files are: "%.d" for those generated from
                     intermediate ones. This allows more comfortable
                     debugging when things go wrong during a build.
 
+  * REALLY_QUIET  - when set this flag turns off output from some commands.
+
   * OCAMLMAKEFILE - location of (=path to) this "OCamlMakefile".
                     Because it calles itself recursively, it has to
                     know where it is. (default: "OCamlMakefile" =
@@ -630,7 +633,7 @@ found at:
 
 Enjoy!
 
-New York, 2007-01-08
+New York, 2007-04-22
 Markus Mottl
 
 e-mail: markus.mottl@gmail.com

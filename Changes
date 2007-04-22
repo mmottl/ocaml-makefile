@@ -4,7 +4,7 @@
               * REALLY_QUIET
 
             The LFLAGS variable is passed to ocamllex.
-            The REALLY_QUIET variable turns off most of the output from commands.
+            The REALLY_QUIET variable turns off output from some commands.
 
             Thanks to Samuel Colin <Samuel.Colin@loria.fr> for the patch!
 
