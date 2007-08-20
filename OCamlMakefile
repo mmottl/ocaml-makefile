@@ -1141,6 +1141,20 @@ libinstall:	all
 	$(OCAMLFIND) install $(OCAMLFIND_INSTFLAGS) $(RESULT) META $(LIBINSTALL_FILES)
 	$(QUIET)printf "\nInstallation successful.\n"
 
+.PHONY: libinstall-byte-code
+libinstall-byte-code:	all
+	$(QUIET)printf "\nInstalling byte-code library with ocamlfind\n"
+	$(OCAMLFIND) install $(OCAMLFIND_INSTFLAGS) $(RESULT) META \
+	  $(filter-out $(RESULT).$(EXT_LIB) $(RESULT).cmxa, $(LIBINSTALL_FILES))
+	$(QUIET)printf "\nInstallation successful.\n"
+
+.PHONY: libinstall-native-code
+libinstall-native-code:	all
+	$(QUIET)printf "\nInstalling native-code library with ocamlfind\n"
+	$(OCAMLFIND) install $(OCAMLFIND_INSTFLAGS) $(RESULT) META \
+	  $(filter-out $(DLLSONAME) $(RESULT).cma, $(LIBINSTALL_FILES))
+	$(QUIET)printf "\nInstallation successful.\n"
+
 .PHONY: libuninstall
 libuninstall:
 	$(QUIET)printf "\nUninstalling library with ocamlfind\n"

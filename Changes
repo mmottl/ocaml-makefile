@@ -1,3 +1,8 @@
+2007-08-20: New targets:
+
+              * libinstall-byte-code
+              * libinstall-native-code
+
 2007-04-22: New variables:
 
               * LFLAGS
