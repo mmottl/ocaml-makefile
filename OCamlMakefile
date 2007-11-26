@@ -791,6 +791,23 @@ debug-code-nolink:	$(PRE_TARGETS)
 				OCAMLLDFLAGS="-g $(OCAMLLDFLAGS)"
 dcnl:	debug-code-nolink
 
+# generates byte-code with debugging information (native code)
+debug-native-code:	$(PRE_TARGETS)
+			$(QUIET)$(MAKE) -r -f $(OCAMLMAKEFILE) $(NCRESULT) \
+				REAL_RESULT="$(NCRESULT)" make_deps=yes \
+				REAL_OCAMLC="$(OCAMLOPT)" \
+				OCAMLFLAGS="-g $(OCAMLFLAGS)" \
+				OCAMLLDFLAGS="-g $(OCAMLLDFLAGS)"
+dnc:	debug-native-code
+
+debug-native-code-nolink:	$(PRE_TARGETS)
+			$(QUIET)$(MAKE) -r -f $(OCAMLMAKEFILE) nolink \
+				REAL_RESULT="$(NCRESULT)" make_deps=yes \
+				REAL_OCAMLC="$(OCAMLOPT)" \
+				OCAMLFLAGS="-g $(OCAMLFLAGS)" \
+				OCAMLLDFLAGS="-g $(OCAMLLDFLAGS)"
+dncnl:	debug-native-code-nolink
+
 # generates byte-code libraries with debugging information
 debug-code-library:	$(PRE_TARGETS)
 			$(QUIET)$(MAKE) -r -f $(OCAMLMAKEFILE) \
@@ -800,6 +817,17 @@ debug-code-library:	$(PRE_TARGETS)
 				OCAMLFLAGS="-g $(OCAMLFLAGS)" \
 				OCAMLLDFLAGS="-g $(OCAMLLDFLAGS)"
 dcl:	debug-code-library
+
+# generates byte-code libraries with debugging information (native code)
+debug-native-code-library:	$(PRE_TARGETS)
+			$(QUIET)$(MAKE) -r -f $(OCAMLMAKEFILE) \
+				$(RES_CLIB) $(NCRESULT).cma \
+				REAL_RESULT="$(NCRESULT)" make_deps=yes \
+				REAL_OCAMLC="$(OCAMLOPT)" \
+				CREATE_LIB=yes \
+				OCAMLFLAGS="-g $(OCAMLFLAGS)" \
+				OCAMLLDFLAGS="-g $(OCAMLLDFLAGS)"
+dncl:	debug-native-code-library
 
 # generates byte-code for profiling
 profiling-byte-code:		$(PRE_TARGETS)

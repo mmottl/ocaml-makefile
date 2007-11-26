@@ -1,3 +1,8 @@
+2007-11-26: Added support for debug native code.
+
+            Thanks to Samuel Mimram <samuel.mimram@ens-lyon.org> for
+            the patch!
+
 2007-10-12: Fixed a small build problem concerning packed libraries.
 
 2007-08-20: New targets:
