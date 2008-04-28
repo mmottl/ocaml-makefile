@@ -1,3 +1,9 @@
+2008-04-28: Better support for packed libraries.  No need to explicitly
+            add "-for-pack <PackageName>" to the compilation flags.
+
+            Thanks to Francisco José Valverde Albacete <fva@tsc.uc3m.es>
+            for the patch!
+
 2007-11-26: Added support for debug native code.
 
             Thanks to Samuel Mimram <samuel.mimram@ens-lyon.org> for
