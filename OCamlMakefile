@@ -588,6 +588,10 @@ else
   OBJS_LIBS := $(CLIBS_OPTS) $(MAYBE_IDL)
 endif
 
+ifdef LIB_PACK_NAME
+  FOR_PACK_NAME := $(shell echo $(LIB_PACK_NAME) | sed -e 's/^\(.\)/\U\1/')
+endif
+
 # If we have to make byte-code
 ifndef REAL_OCAMLC
   BYTE_OCAML := y
@@ -598,7 +602,13 @@ ifndef REAL_OCAMLC
   # the path since I don't know the paths built into the compiler, so
   # just include the ones with slashes in their names.
   EXTRADEPS := $(addsuffix .cma,$(foreach i,$(LIBS),$(if $(findstring /,$(i)),$(i))))
-  SPECIAL_OCAMLFLAGS := $(OCAMLBCFLAGS)
+
+
+  ifndef LIB_PACK_NAME
+    SPECIAL_OCAMLFLAGS := $(OCAMLBCFLAGS)
+  else	
+    SPECIAL_OCAMLFLAGS := -for-pack $(FOR_PACK_NAME) $(OCAMLBCFLAGS)
+  endif
 
   REAL_OCAMLC := $(INTF_OCAMLC)
 
@@ -658,7 +668,7 @@ else
   ifndef LIB_PACK_NAME
     SPECIAL_OCAMLFLAGS := $(OCAMLNCFLAGS)
   else	
-    SPECIAL_OCAMLFLAGS := -for-pack $(LIB_PACK_NAME) $(OCAMLNCFLAGS)
+    SPECIAL_OCAMLFLAGS := -for-pack $(FOR_PACK_NAME) $(OCAMLNCFLAGS)
   endif
   REAL_IMPL := $(IMPL_CMX)
   REAL_IMPL_INTF := $(IMPLX_INTF)
@@ -1019,12 +1029,6 @@ endif
 			  $(REAL_OCAMLFIND) $(REAL_OCAMLC) $(OCAML_FIND_PACKAGES) \
 				-c -pp "$$pp $(PPFLAGS)" $(ALL_OCAMLCFLAGS) $<; \
 			fi
-
-ifdef PACK_LIB
-$(REAL_RESULT).cmo $(REAL_RESULT).cmx $(REAL_RESULT).o: $(REAL_IMPL_INTF) $(OBJ_LINK) $(EXTRADEPS)
-			$(REAL_OCAMLFIND) $(REAL_OCAMLC) -pack $(ALL_LDFLAGS) \
-				$(OBJS_LIBS) -o $@ $(REAL_IMPL)
-endif
 
 .PRECIOUS:		%.ml
 %.ml:			%.mll

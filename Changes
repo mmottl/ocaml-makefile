@@ -1,3 +1,5 @@
+2008-08-20: Fixed bug concerning packed library handling.
+
 2008-04-28: Better support for packed libraries.  No need to explicitly
             add "-for-pack <PackageName>" to the compilation flags.
 
