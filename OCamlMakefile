@@ -589,7 +589,7 @@ else
 endif
 
 ifdef LIB_PACK_NAME
-  FOR_PACK_NAME := $(shell echo $(LIB_PACK_NAME) | sed -e 's/^\(.\)/\U\1/')
+  FOR_PACK_NAME := $(shell echo $(LIB_PACK_NAME) | awk '{print toupper(substr($$0,1,1))substr($$0,2)}')
 endif
 
 # If we have to make byte-code
