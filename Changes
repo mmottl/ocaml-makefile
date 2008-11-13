@@ -1,3 +1,5 @@
+2008-10-12: Improvements to Windows portability.
+
 2008-10-15: Fixed portability problem on MacOS X concerning handling of
             packed libraries.
 
