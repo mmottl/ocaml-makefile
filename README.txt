@@ -29,7 +29,7 @@ OCamlMakefile  - Makefile for easy handling of compilation of not so easy
                  Automatic generation of documentation is easy due to
                  integration of support for OCamldoc.
 
-README         - this file
+README.txt     - this file
 
 calc/          - Directory containing a quite fully-featured example
                  of what "OCamlMakefile" can do for you. This example
