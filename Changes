@@ -1,3 +1,8 @@
+2008-12-30: Incorporated some fixes for Cygwin portability.
+
+            Thanks to Christophe Troestler
+            <Christophe.Troestler@umh.ac.be> for the patch!
+
 2008-10-12: Improvements to Windows portability.
 
 2008-10-15: Fixed portability problem on MacOS X concerning handling of
