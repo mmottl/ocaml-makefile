@@ -1,3 +1,8 @@
+2009-04-23: Fixed a build problem on MinGW.
+
+            Thanks to Gerd Stolpmann <gerd@gerd-stolpmann.de> for
+            the patch!
+
 2008-12-30: Incorporated some fixes for Cygwin portability.
 
             Thanks to Christophe Troestler
