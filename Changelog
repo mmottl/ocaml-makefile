@@ -1,3 +1,8 @@
+2009-05-08: Fixed build and installation problems on Windows.
+
+            Thanks to Sylvain Le Gall <gildor@ocamlcore.org> for the
+            patch!
+
 2009-04-23: Fixed a build problem on MinGW.
 
             Thanks to Gerd Stolpmann <gerd@gerd-stolpmann.de> for
