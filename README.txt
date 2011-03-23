@@ -552,6 +552,7 @@ The endings of the dependency files are: "%.d" for those generated from
                          this path all the time.
 
   * OCAMLFIND     - ocamlfind from findlib       (default: "ocamlfind")
+  * OCAML         - OCaml interpreter            (default: "ocaml")
   * OCAMLC        - byte-code compiler           (default: "ocamlc")
   * OCAMLOPT      - native-code compiler         (default: "ocamlopt")
   * OCAMLMKTOP    - top-level compiler           (default: "ocamlmktop")
@@ -633,7 +634,7 @@ found at:
 
 Enjoy!
 
-New York, 2007-04-22
+New York, 2011-03-23
 Markus Mottl
 
 e-mail: markus.mottl@gmail.com

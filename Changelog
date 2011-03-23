@@ -1,3 +1,8 @@
+2011-03-23: Improved handling of packed byte-code libraries.
+
+            Thanks to Christophe Troestler <Christophe.Troestler@umons.ac.be> for the
+            patch!
+
 2009-05-08: Fixed build and installation problems on Windows.
 
             Thanks to Sylvain Le Gall <gildor@ocamlcore.org> for the
