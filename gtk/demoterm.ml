@@ -23,11 +23,11 @@ let _ =
   let exitNoError () = exit 0 in
   let window = GWindow.window ~title:"DemoTerm" () in
   let text =
-    GEdit.text
-      ~editable:false ~word_wrap:true ~line_wrap:true
+    GText.view
+      ~editable:false ~wrap_mode:`WORD
       ~width:80 ~height:24 ~show:true ~packing:window#add () in
 
-  text#insert
+  text#buffer#insert
     "DemoTerm version 0, Copyright (C) 2002 Tim Freeman\n\
      DemoTerm comes with ABSOLUTELY NO WARRANTY.\n\
      This is free software, and you are welcome to redistribute it \
@@ -48,7 +48,7 @@ let _ =
         (* To send a character, insert it into the buffer and copy it to
            outch. *)
         let tosend = String.make 1 ch in
-        text#insert tosend;
+        text#buffer#insert tosend;
         output outch tosend 0 1;
         flush outch in
       let rec loop pos =
@@ -81,7 +81,7 @@ let _ =
     let rec copyLoop () =
       let len = input inch buf 0 (String.length buf) in
       if len > 0 then (
-        text#insert (String.sub buf ~pos:0 ~len);
+        text#buffer#insert (String.sub buf ~pos:0 ~len);
         copyLoop ())
       else close_in inch in
     copyLoop () in

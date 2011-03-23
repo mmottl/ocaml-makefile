@@ -2,7 +2,7 @@ OCAMLMAKEFILE = ../OCamlMakefile
 
 SOURCES = demoterm.ml
 RESULT = demoterm
-INCDIRS = +lablgtk
+PACKS = lablgtk2
 THREADS = yes
 
 OCAMLBLDFLAGS = lablgtk.cma gtkInit.cmo gtkThread.cmo
