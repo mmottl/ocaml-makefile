@@ -53,7 +53,7 @@ let _ =
         flush outch in
       let rec loop pos =
         if not !closed && pos < String.length s then
-          let ch = String.get s pos in
+          let ch = s.[pos] in
             (* If it's a control-d, then close the output stream. *)
             if ch = '\004' then (
               close_out outch;
