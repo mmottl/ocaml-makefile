@@ -1,3 +1,5 @@
+2011-11-09: Fixed linking order to conform to stricter Linux linker rules.
+
 2011-03-23: Improved handling of packed byte-code libraries.
 
             Thanks to Christophe Troestler <Christophe.Troestler@umons.ac.be>

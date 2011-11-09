@@ -944,7 +944,7 @@ doc: htdoc ladoc psdoc pdfdoc
 $(REAL_RESULT):		$(REAL_IMPL_INTF) $(OBJ_LINK) $(EXTRADEPS) $(RESULTDEPS)
 			$(REAL_OCAMLFIND) $(REAL_OCAMLC) \
 				$(OCAML_FIND_PACKAGES) $(OCAML_FIND_LINKPKG) \
-				$(ALL_LDFLAGS) $(OBJS_LIBS) -o $@$(EXE) \
+				$(OBJS_LIBS) $(ALL_LDFLAGS) -o $@$(EXE) \
 				$(REAL_IMPL)
 
 nolink:			$(REAL_IMPL_INTF) $(OBJ_LINK)
@@ -958,7 +958,7 @@ endif
 %$(TOPSUFFIX):		$(REAL_IMPL_INTF) $(OBJ_LINK) $(EXTRADEPS)
 			$(REAL_OCAMLFIND) $(OCAMLMKTOP) \
 				$(OCAML_FIND_PACKAGES) $(OCAML_FIND_LINKPKG) \
-				$(ALL_LDFLAGS) $(OBJS_LIBS) -o $@$(EXE) \
+				$(OBJS_LIBS) $(ALL_LDFLAGS) -o $@$(EXE) \
 				$(REAL_IMPL)
 
 .SUFFIXES:		.mli .ml .cmi .cmo .cmx .cma .cmxa .$(EXT_OBJ) \
@@ -1003,10 +1003,10 @@ endif
 
 ifndef LIB_PACK_NAME
 $(RESULT).cma:		$(REAL_IMPL_INTF) $(MAKEDLL) $(EXTRADEPS) $(RESULTDEPS)
-			$(REAL_OCAMLFIND) $(REAL_OCAMLC) -a $(ALL_LDFLAGS) $(OBJS_LIBS) -o $@ $(REAL_IMPL)
+			$(REAL_OCAMLFIND) $(REAL_OCAMLC) -a $(OBJS_LIBS) $(ALL_LDFLAGS) -o $@ $(REAL_IMPL)
 
 $(RESULT).cmxa $(RESULT).$(EXT_LIB):	$(REAL_IMPL_INTF) $(EXTRADEPS) $(RESULTDEPS)
-			$(REAL_OCAMLFIND) $(OCAMLOPT) -a $(ALL_LDFLAGS) $(OBJS_LIBS) -o $@ $(REAL_IMPL)
+			$(REAL_OCAMLFIND) $(OCAMLOPT) -a $(OBJS_LIBS) $(ALL_LDFLAGS) -o $@ $(REAL_IMPL)
 else
 # Packing a bytecode library
 LIB_PACK_NAME_MLI = $(wildcard $(LIB_PACK_NAME).mli)
@@ -1028,10 +1028,10 @@ $(LIB_PACK_NAME_CMI) $(LIB_PACK_NAME).cmx: $(REAL_IMPL_INTF)
 endif
 
 $(RESULT).cma:		$(LIB_PACK_NAME).cmi $(LIB_PACK_NAME).cmo $(MAKEDLL) $(EXTRADEPS) $(RESULTDEPS)
-			$(REAL_OCAMLFIND) $(REAL_OCAMLC) -a $(ALL_LDFLAGS) $(OBJS_LIBS) -o $@ $(LIB_PACK_NAME).cmo
+			$(REAL_OCAMLFIND) $(REAL_OCAMLC) -a $(OBJS_LIBS) $(ALL_LDFLAGS) -o $@ $(LIB_PACK_NAME).cmo
 
 $(RESULT).cmxa $(RESULT).$(EXT_LIB):	$(LIB_PACK_NAME).cmi $(LIB_PACK_NAME).cmx $(EXTRADEPS) $(RESULTDEPS)
-			$(REAL_OCAMLFIND) $(OCAMLOPT) -a $(filter-out -custom, $(ALL_LDFLAGS)) $(OBJS_LIBS) -o $@ $(LIB_PACK_NAME).cmx
+			$(REAL_OCAMLFIND) $(OCAMLOPT) -a $(OBJS_LIBS) $(filter-out -custom, $(ALL_LDFLAGS)) -o $@ $(LIB_PACK_NAME).cmx
 endif
 
 $(RES_CLIB): 		$(OBJ_LINK)
