@@ -1045,7 +1045,7 @@ else
   endif
 endif
 
-.mli.cmi: $(EXTRADEPS)
+%.cmi:	%.mli $(EXTRADEPS)
 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
 			if [ -z "$$pp" ]; then \
 			  $(ECHO) $(REAL_OCAMLFIND) $(INTF_OCAMLC) $(OCAML_FIND_PACKAGES) \
@@ -1063,7 +1063,7 @@ endif
 				$(OCAMLFLAGS) $(INCFLAGS) $<; \
 			fi
 
-.ml.cmi .ml.$(EXT_OBJ) .ml.cmx .ml.cmo: $(EXTRADEPS)
+%.cmi %.cmo %.cmx %.$(EXT_OBJ):	%.ml $(EXTRADEPS)
 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
 			if [ -z "$$pp" ]; then \
 			  $(ECHO) $(REAL_OCAMLFIND) $(REAL_OCAMLC) $(OCAML_FIND_PACKAGES) \
@@ -1119,17 +1119,17 @@ endif
 				$(CAMLIDLFLAGS) $<
 			$(QUIET)if [ $(NOIDLHEADER) ]; then touch $*.h; fi
 
-.c.$(EXT_OBJ):
+%.$(EXT_OBJ):	%.c
 			$(OCAMLC) -c -cc "$(CC)" -ccopt "$(CFLAGS) \
 				$(CPPFLAGS) $(CPPFLAGS_WIN32) \
 				$(CFLAGS_WIN32) $(CINCFLAGS) $(CFLAG_O)$@ " $<
 
-.m.$(EXT_OBJ):
+%.$(EXT_OBJ):	%.m
 			$(CC) -c $(CFLAGS) $(CINCFLAGS) $(CPPFLAGS) \
 				-I'$(OCAMLLIBPATH)' \
 				$< $(CFLAG_O)$@
 
-.$(EXT_CXX).$(EXT_OBJ):
+%.$(EXT_OBJ): %.$(EXT_CXX)
 			$(CXX) -c $(CXXFLAGS) $(CINCFLAGS) $(CPPFLAGS) \
 				-I'$(OCAMLLIBPATH)' \
 				$< $(CFLAG_O)$@
