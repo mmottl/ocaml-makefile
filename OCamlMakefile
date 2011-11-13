@@ -1063,6 +1063,8 @@ endif
 				$(OCAMLFLAGS) $(INCFLAGS) $<; \
 			fi
 
+%.cmi: %$(IMPL_SUF);
+
 %.cmi %.cmo %.cmx %.$(EXT_OBJ):	%.ml $(EXTRADEPS)
 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
 			if [ -z "$$pp" ]; then \

@@ -1,3 +1,7 @@
+2011-11-13: Added extra dependency to improve parallel builds.
+
+            Thanks to Edward Schwartz <edmcman@cmu.edu> for the patch!
+
 2011-11-12: Replaced obsolete suffix rules and improved link flags in gtk.
 
 2011-11-09: Fixed linking order to conform to stricter Linux linker rules.
