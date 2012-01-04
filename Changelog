@@ -1,3 +1,7 @@
+2012-01-04: Fixed native code library debug build target.
+
+            Thanks to Stéphane Glondu <glondu@debian.org> for the patch!
+
 2011-11-13: Added extra dependency to improve parallel builds.
 
             Thanks to Edward Schwartz <edmcman@cmu.edu> for the patch!
