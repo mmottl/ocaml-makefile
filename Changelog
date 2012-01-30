@@ -1,3 +1,9 @@
+2012-01-30: Fixed a circular dependency bug that appeared with the newest
+            GNU make (version 3.82).
+
+            Thanks to Adrien Nader <adrien@notk.org> for the report and
+            Edward Schwartz <edmcman@cmu.edu> for the patch!
+
 2012-01-04: Fixed native code library debug build target.
 
             Thanks to Stéphane Glondu <glondu@debian.org> for the patch!

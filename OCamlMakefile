@@ -1065,7 +1065,7 @@ endif
 
 %.cmi: %$(IMPL_SUF);
 
-%.cmi %.cmo %.cmx %.$(EXT_OBJ):	%.ml $(EXTRADEPS)
+%$(IMPL_SUF) %.$(EXT_OBJ):	%.ml $(EXTRADEPS)
 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
 			if [ -z "$$pp" ]; then \
 			  $(ECHO) $(REAL_OCAMLFIND) $(REAL_OCAMLC) $(OCAML_FIND_PACKAGES) \
