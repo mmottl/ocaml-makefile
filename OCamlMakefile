@@ -555,8 +555,7 @@ ifdef USE_CAMLP4
   CINCFLAGS := -I$(CAMLP4PATH)
 endif
 
-DINCFLAGS := $(INCFLAGS) $(SOURCE_DIRS:%=-I %) $(OCAML_DEFAULT_DIRS:%=-I %)
-INCFLAGS := $(DINCFLAGS) $(INCDIRS:%=-I %)
+INCFLAGS := $(INCFLAGS) $(INCDIRS:%=-I %) $(SOURCE_DIRS:%=-I %) $(OCAML_DEFAULT_DIRS:%=-I %)
 CINCFLAGS += $(SOURCE_DIRS:%=-I%) $(INCDIRS:%=-I%) $(OCAML_DEFAULT_DIRS:%=-I%)
 
 ifndef MSVC
@@ -1141,27 +1140,27 @@ $(MLDEPDIR)/%.d:	%.ml
 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
 			if [ -z "$$pp" ]; then \
 			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
-				$(DINCFLAGS) $< \> $@; \
+				$(INCFLAGS) $< \> $@; \
 			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
-				$(DINCFLAGS) $< > $@; \
+				$(INCFLAGS) $< > $@; \
 			else \
 			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
-				-pp \"$$pp $(PPFLAGS)\" $(DINCFLAGS) $< \> $@; \
+				-pp \"$$pp $(PPFLAGS)\" $(INCFLAGS) $< \> $@; \
 			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(OCAML_DEP_PACKAGES) \
-				-pp "$$pp $(PPFLAGS)" $(DINCFLAGS) $< > $@; \
+				-pp "$$pp $(PPFLAGS)" $(INCFLAGS) $< > $@; \
 			fi
 
 $(BCDIDIR)/%.di $(NCDIDIR)/%.di:	%.mli
 			$(QUIET)if [ ! -d $(@D) ]; then mkdir -p $(@D); fi
 			$(QUIET)pp=`sed -n -e '/^#/d' -e 's/(\*pp \([^*]*\) \*)/\1/p;q' $<`; \
 			if [ -z "$$pp" ]; then \
-			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) $(DINCFLAGS) $< \> $@; \
-			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) $(DINCFLAGS) $< > $@; \
+			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) $(INCFLAGS) $< \> $@; \
+			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) $(INCFLAGS) $< > $@; \
 			else \
 			  $(ECHO) $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) \
-			    -pp \"$$pp $(PPFLAGS)\" $(DINCFLAGS) $< \> $@; \
+			    -pp \"$$pp $(PPFLAGS)\" $(INCFLAGS) $< \> $@; \
 			  $(REAL_OCAMLFIND) $(OCAMLDEP) $(DEPFLAGS) \
-			    -pp "$$pp $(PPFLAGS)" $(DINCFLAGS) $< > $@; \
+			    -pp "$$pp $(PPFLAGS)" $(INCFLAGS) $< > $@; \
 			fi
 
 $(DOC_DIR)/$(RESULT)/html:
