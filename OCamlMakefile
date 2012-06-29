@@ -115,12 +115,13 @@ endif
 SYSTEM := $(shell ocamlc -config 2>/dev/null | grep system | sed 's/system: //')
     # This may be
     # - mingw
+    # - mingw64
     # - win32
     # - cygwin
     # - some other string means Unix
     # - empty means ocamlc does not support -config
 
-ifeq ($(SYSTEM),mingw)
+ifeq ($(SYSTEM),$(filter $(SYSTEM),mingw mingw64))
   MINGW=1
 endif
 ifeq ($(SYSTEM),win32)
@@ -130,11 +131,18 @@ endif
 ifdef MINGW
   export MINGW
   WIN32 := 1
-  # We are compiling with cygwin tools:
-  CFLAGS_WIN32 := -mno-cygwin
   # The default value 'cc' makes 'ocamlc -cc "cc"' raises the error 'The
   # NTVDM CPU has encountered an illegal instruction'.
-  CC := gcc
+  ifndef CC
+    MNO_CYGWIN := $(shell gcc -Wextra -v --help 2>/dev/null | grep -q '\-mno-cygwin'; echo $$?)
+    CC := gcc
+  else
+    MNO_CYGWIN := $(shell $$CC -Wextra -v --help 2>/dev/null | grep -q '\-mno-cygwin'; echo $$?)
+  endif
+  # We are compiling with cygwin tools:
+  ifeq ($(MNO_CYGWIN),0)
+	CFLAGS_WIN32 := -mno-cygwin
+  endif
   # The OCaml C header files use this flag:
   CFLAGS += -D__MINGW32__
 endif
@@ -632,7 +640,7 @@ ifndef REAL_OCAMLC
 
   ifndef LIB_PACK_NAME
     SPECIAL_OCAMLFLAGS := $(OCAMLBCFLAGS)
-  else	
+  else
     SPECIAL_OCAMLFLAGS := -for-pack $(FOR_PACK_NAME) $(OCAMLBCFLAGS)
   endif
 
@@ -693,7 +701,7 @@ else
 
   ifndef LIB_PACK_NAME
     SPECIAL_OCAMLFLAGS := $(OCAMLNCFLAGS)
-  else	
+  else
     SPECIAL_OCAMLFLAGS := -for-pack $(FOR_PACK_NAME) $(OCAMLNCFLAGS)
   endif
   REAL_IMPL := $(IMPL_CMX)
