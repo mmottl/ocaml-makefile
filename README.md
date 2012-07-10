@@ -1,5 +1,5 @@
-OCamlMakefile - A Simple Generic Makefile for OCaml-Projects
-============================================================
+OCamlMakefile - A Simple Generic Makefile for [OCaml](http://www.ocaml.org)-Projects
+====================================================================================
 
 ---------------------------------------------------------------------------
 
