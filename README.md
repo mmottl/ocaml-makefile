@@ -37,7 +37,7 @@ Cons
     projects:
 
       * [OMake](http://omake.metaprl.org/index.html)
-      * [ocamlbuild](http://brion.inria.fr/gallium/index.php/Ocamlbuild)
+      * [Ocamlbuild](http://brion.inria.fr/gallium/index.php/Ocamlbuild)
       * [Oasis](http://oasis.forge.ocamlcore.org)
 
 Usage
