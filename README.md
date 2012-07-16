@@ -51,7 +51,7 @@ To create your own project, first edit a project-specific `Makefile` in the
 appropriate directory.  There are two ways of making use of `OCamlMakefile`:
 
   1. Have a look at the default settings in `OCamlMakefile` and set
-     them to the values that are vaild on your system.   For example, check
+     them to the values that are valid on your system.   For example, check
      whether the path to the standard libraries is ok, what executables shall
      be used, etc.  Copy it into the directory of the project to be compiled.
      Add the following statement as last line to your `Makefile`:
@@ -163,10 +163,10 @@ with C-files:
 >
 > It is sometimes more convenient to link all C-object files into a
 > single C-library.  Then you have to override the automatic link flags
-> of your library using `-noautolink` and add another linkflag that
+> of your library using `-noautolink` and add another link flag that
 > links in your C-library explicitly.
 
-Concerning maintainance:
+Concerning maintenance:
 
   * `make clean` removes all (all!) automatically generated files.
     So again, make sure your variables are ok!
@@ -215,7 +215,7 @@ A short hint for DEC Alpha-users (under Digital Unix): you may also compile
 your sources to native code without any further profiling options/targets.
 Then call `pixie my_exec`, `my_exec` being your executable.  This will produce
 (among other files) an executable `my_exec.pixie`.  Call it and it will produce
-profiling information which can be analysed using `prof -pixie my_exec`.
+profiling information which can be analyzed using `prof -pixie my_exec`.
 The resulting information is extremely detailed and allows analysis up to
 the clock cycle level...
 
@@ -412,7 +412,7 @@ See the `threads`-directory in the distribution for a short example!
     * CLIBS         - C-libraries that should be linked (just plain names).
 
     * PRE_TARGETS   - set this to a list of target files that you want
-                      to have buildt before dependency calculation actually
+                      to have built before dependency calculation actually
                       takes place.  E.g. use this to automatically compile
                       modules needed by camlp4, which have to be available
                       before other modules can be parsed at all.
@@ -549,7 +549,7 @@ See the `threads`-directory in the distribution for a short example!
     * REALLY_QUIET  - when set this flag turns off output from some commands.
 
     * OCAMLMAKEFILE - location of (= path to) this OCamlMakefile.
-                      Because it calles itself recursively, it has to know
+                      Because it calls itself recursively, it has to know
                       where it is. (default: OCamlMakefile = local directory)
 
     * BCSUFFIX      - Suffix for all byte-code files.  E.g.:
