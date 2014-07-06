@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Ocaml-makefile : Easy to use Makefile for small to medium-sized OCaml-projects" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Ocaml-makefile</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/mmottl/ocaml-makefile">View on GitHub</a>
+
+          <h1 id="project_title">Ocaml-makefile</h1>
+          <h2 id="project_tagline">Easy to use Makefile for small to medium-sized OCaml-projects</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/mmottl/ocaml-makefile/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/mmottl/ocaml-makefile/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="ocamlmakefile---a-simple-generic-makefile-for-ocaml-projects" class="anchor" href="#ocamlmakefile---a-simple-generic-makefile-for-ocaml-projects"><span class="octicon octicon-link"></span></a>OCamlMakefile - A Simple Generic Makefile for <a href="http://www.ocaml.org">OCaml</a>-Projects</h1>
+
+<hr><h2>
+<a name="prerequisites" class="anchor" href="#prerequisites"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
+
+<ul>
+<li>GNU-Make version 3.80 or higher</li>
+</ul><h2>
+<a name="pros" class="anchor" href="#pros"><span class="octicon octicon-link"></span></a>Pros</h2>
+
+<ul>
+<li><p>It is well-tested across multiple platforms and has been used in many
+projects.</p></li>
+<li><p>It generates dependencies correctly by ensuring that all automatically
+generated OCaml-files exist before dependency calculation.  This is the
+only way to guarantee that <code>ocamldep</code> can do its job.</p></li>
+<li><p>Convenience.  Even fairly complex compilation processes (see example
+<code>calc.ml</code>) need only little information to work correctly, sometimes
+just about the minimum (filenames of sources).</p></li>
+</ul><h2>
+<a name="cons" class="anchor" href="#cons"><span class="octicon octicon-link"></span></a>Cons</h2>
+
+<ul>
+<li><p>It may not be a good choice in projects where many compilation units
+require different flags.</p></li>
+<li>
+<p>Though it can scale to medium-sized projects, large projects with,
+for example, dependencies across multiple libraries in different
+directories are not well-supported.</p>
+
+<p>This is a general shortcoming of the already somewhat dated <code>make</code>.
+You may want to investigate the following tools to approach larger
+projects:</p>
+
+<ul>
+<li><a href="http://omake.metaprl.org/index.html">OMake</a></li>
+<li><a href="http://brion.inria.fr/gallium/index.php/Ocamlbuild">Ocamlbuild</a></li>
+<li><a href="http://oasis.forge.ocamlcore.org">Oasis</a></li>
+</ul>
+</li>
+</ul><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>It is recommended that first-time users take a look at the examples in the
+distribution for a quick introduction.  <code>OCamlMakefile</code>-projects are often so
+simple that they are self-explanatory.</p>
+
+<p>To create your own project, first edit a project-specific <code>Makefile</code> in the
+appropriate directory.  There are two ways of making use of <code>OCamlMakefile</code>:</p>
+
+<ol>
+<li>
+<p>Have a look at the default settings in <code>OCamlMakefile</code> and set
+ them to the values that are valid on your system.   For example, check
+ whether the path to the standard libraries is ok, what executables shall
+ be used, etc.  Copy it into the directory of the project to be compiled.
+ Add the following statement as last line to your <code>Makefile</code>:</p>
+
+<div class="highlight highlight-makefile"><pre><span class="cp"> -include OCamlMakefile</span>
+</pre></div>
+</li>
+<li><p>Put <code>OCamlMakefile</code> somewhere else in your system.  In this case you
+ will have to set the variable <code>OCAMLMAKEFILE</code> in your project-specific
+ <code>Makefile</code>.  This is the way in which the examples are written.  Now you
+ only need one version of <code>OCamlMakefile</code> to manage all of your projects!
+ See the examples for details.</p></li>
+</ol><p>You will usually need to specify two further variables for your project:</p>
+
+<ul>
+<li>
+<code>SOURCES</code>  (default: <code>foo.ml</code>)</li>
+<li>
+<code>RESULT</code>   (default: <code>foo</code>)</li>
+</ul><p>Put all the sources necessary for a target into variable <code>SOURCES</code>.  Then set
+<code>RESULT</code> to the name of the target.  If you want to generate libraries,
+you should <em>not</em> specify the suffix (<code>.cma</code>, <code>.cmxa</code>, <code>.a</code>).  It will be
+added automatically if you specify that you want to build a library.</p>
+
+<div class="highlight highlight-text"><pre>**      Don't forget to add the `.mli`-files, too!            **
+**  Don't forget that the order of the source files matters!  **
+</pre></div>
+
+<p>The order is important, because it matters during linking due to potential
+side effects caused at program startup.  This is why <code>OCamlMakefile</code> does not
+attempt to partially order dependencies by itself, which might confuse users
+even more.  It just compiles and links OCaml-sources in the order specified
+by the user, even if it could determine automatically that the order cannot
+be correct.</p>
+
+<p>The minimum of your <code>Makefile</code> looks like this (assuming that <code>OCamlMakefile</code>
+is in the search path of <code>make</code>):</p>
+
+<div class="highlight highlight-makefile"><pre><span class="cp">-include OCamlMakefile</span>
+</pre></div>
+
+<p>This will assume that you want to compile a file <code>foo.ml</code> to a binary <code>foo</code>.</p>
+
+<p>Otherwise, your Makefile will probably contain something like this:</p>
+
+<div class="highlight highlight-makefile"><pre><span class="nv">SOURCES</span> <span class="o">=</span> foo.ml
+<span class="nv">RESULT</span>  <span class="o">=</span> foo
+
+<span class="cp">-include OCamlMakefile</span>
+</pre></div>
+
+<p>Be careful with the names you put into these variables.  If they are wrong,
+a <code>make clean</code> might erase the wrong files!</p>
+
+<p>A simple <code>make</code> will generate a byte-code executable.  If you want to change
+this, you may add an <code>all</code>-rule that generates something else.  For example:</p>
+
+<div class="highlight highlight-makefile"><pre><span class="nv">SOURCES</span> <span class="o">=</span> foo.ml
+<span class="nv">RESULT</span>  <span class="o">=</span> foo
+
+<span class="nf">all</span><span class="o">:</span> <span class="n">native</span>-<span class="n">code</span>-<span class="n">library</span>
+
+<span class="cp">-include OCamlMakefile</span>
+</pre></div>
+
+<p>This will build a native-code library <code>foo.cmxa</code> (+ <code>foo.a</code>) from file
+<code>foo.ml</code>.</p>
+
+<p>You may even build several targets at once.  To produce byte- and native-code
+executables with one <code>make</code>, add the following rule:</p>
+
+<div class="highlight highlight-makefile"><pre><span class="nf">all</span><span class="o">:</span> <span class="n">byte</span>-<span class="n">code</span> <span class="n">native</span>-<span class="n">code</span>
+</pre></div>
+
+<p>You will probably want to use a different suffix for each of these targets
+so that the result will not be overwritten.  See the optional variables
+below for details.</p>
+
+<p>You may also tell <code>make</code> at the command-line what kind of target to produce
+(e.g. <code>make nc</code>).  Here all the possibilities with shortcuts between
+parenthesis:</p>
+
+<div class="highlight highlight-text"><pre>byte-code                      (bc)
+byte-code-nolink               (bcnl) - no linking stage
+byte-code-library              (bcl)
+native-code                    (nc)
+native-code-nolink             (ncnl) - no linking stage
+native-code-library            (ncl)
+debug-code                     (dc)
+debug-code-nolink              (dcnl) - no linking stage
+debug-code-library             (dcl)
+profiling-byte-code            (pbc)
+profiling-byte-code-library    (pbcl)
+profiling-native-code          (pnc)
+profiling-native-code-library  (pncl)
+byte-code-dll                  (bcd)
+native-code-dll                (ncd)
+pack-byte-code                 (pabc)
+pack-native-code               (panc)
+toplevel                       (top)
+subprojs
+</pre></div>
+
+<p>Here is a short note concerning building and linking byte code libraries
+with C-files:</p>
+
+<blockquote>
+<p>OCaml links C-object files only when they are used in an executable.
+After compilation they should be placed in some directory that is in
+your include path if you link your library against an executable.</p>
+
+<p>It is sometimes more convenient to link all C-object files into a
+single C-library.  Then you have to override the automatic link flags
+of your library using <code>-noautolink</code> and add another link flag that
+links in your C-library explicitly.</p>
+</blockquote>
+
+<p>Concerning maintenance:</p>
+
+<ul>
+<li><p><code>make clean</code> removes all (all!) automatically generated files.
+So again, make sure your variables are ok!</p></li>
+<li><p><code>make cleanup</code> is similar to <code>make clean</code> but keeps executables.</p></li>
+</ul><p>Another way to destroy some important files is by having <code>OCamlMakefile</code>
+automatically generate files with the same name.  Read the documentation about
+the tools in the OCaml-distribution to see what kind of files are generated.
+<code>OCamlMakefile</code> additionally generates (<code>%</code> is the basename of source file):</p>
+
+<ul>
+<li>
+<code>%_idl.c</code> - <code>camlidl</code> generates a file <code>%.c</code> from <code>%.idl</code>, but this is
+not such a good idea, because when generating native-code, both the
+file <code>%.c</code> and <code>%.ml</code> would generate files <code>%.o</code> which would overwrite
+each other.  Thus, <code>OCamlMakefile</code> renames <code>%.c</code> to <code>%_idl.c</code> to work
+around this problem.</li>
+</ul><p>The dependencies are stored in three different subdirectories (dot dirs):</p>
+
+<ul>
+<li>
+<code>._d</code> - contains dependencies for .ml-files</li>
+<li>
+<code>._bcdi</code> - contains byte code dependencies for .mli-files</li>
+<li>
+<code>._ncdi</code> - contains native code dependencies for .mli-files</li>
+</ul><p>The endings of the dependency files are: <code>%.d</code> for those generated from
+<code>%.ml</code>-files and <code>%.di</code> for ones derived from <code>%.mli</code>-files.</p>
+
+<h3>
+<a name="debugging" class="anchor" href="#debugging"><span class="octicon octicon-link"></span></a>Debugging</h3>
+
+<p>This is easy: if you discover a bug, just do a <code>make clean; make dc</code> to
+recompile your project with debugging information.  Then you can immediately
+apply <code>ocamldebug</code> to the executable.</p>
+
+<h3>
+<a name="profiling" class="anchor" href="#profiling"><span class="octicon octicon-link"></span></a>Profiling</h3>
+
+<p>To generate code that can be profiled with <code>ocamlprof</code> (byte code) or <code>gprof</code>
+(native code), compile your project with one of the profiling targets (see
+targets above).  E.g.:</p>
+
+<ul>
+<li>
+<code>make pbc</code> will build byte code that can be profiled with <code>ocamlprof</code>.</li>
+<li>
+<code>make pnc</code> will build native code that can be profiled with <code>gprof</code>.</li>
+</ul><p>Please note that it is not currently possible to profile byte code with
+threads.  <code>OCamlMakefile</code> will force an error if you try to do this.</p>
+
+<p>A short hint for DEC Alpha-users (under Digital Unix): you may also compile
+your sources to native code without any further profiling options/targets.
+Then call <code>pixie my_exec</code>, <code>my_exec</code> being your executable.  This will produce
+(among other files) an executable <code>my_exec.pixie</code>.  Call it and it will produce
+profiling information which can be analyzed using <code>prof -pixie my_exec</code>.
+The resulting information is extremely detailed and allows analysis up to
+the clock cycle level...</p>
+
+<h3>
+<a name="using-preprocessors" class="anchor" href="#using-preprocessors"><span class="octicon octicon-link"></span></a>Using Preprocessors</h3>
+
+<p>Because any kind of program that reads from standard input and prints to
+standard output can be used as a preprocessor, there cannot be any default
+way to handle all of them correctly without further knowledge.</p>
+
+<p>Therefore, you have to cooperate a bit with <code>OCamlMakefile</code> to let
+preprocessing happen automatically.  Basically, this only requires that you
+put a comment into the first line of files that should be preprocessed, e.g.:</p>
+
+<div class="highlight highlight-ocaml"><pre><span class="c">(*pp cat *)</span>
+<span class="c">(* ... rest of program ... *)</span>
+</pre></div>
+
+<p><code>OCamlMakefile</code> looks at the first line of your files, and if it finds a
+comment that starts with "<code>(*pp</code>", then it will assume that the rest of
+the comment tells it how to correctly call the appropriate preprocessor.
+In this case the program <code>cat</code> will be called, which will, of course, just
+output the source text again without changing it.</p>
+
+<p>If, for example, you were an advocate of the "revised syntax", which is
+supported by the <code>camlp4</code> preprocessor, you could simply write:</p>
+
+<div class="highlight highlight-ocaml"><pre><span class="c">(*pp camlp4r *)</span>
+<span class="c">(* ... rest of program in revised syntax ... *)</span>
+</pre></div>
+
+<p>If you want to write your own syntax extensions, just take a look at the
+example in the directory <code>camlp4</code>: it implements the "<code>repeat ... until</code>"
+extension as described in the <code>camlp4</code>-tutorial.</p>
+
+<h3>
+<a name="library-un-installation-support" class="anchor" href="#library-un-installation-support"><span class="octicon octicon-link"></span></a>Library (Un-)Installation Support</h3>
+
+<p><code>OCamlMakefile</code> contains two targets using <code>ocamlfind</code> for this purpose:</p>
+
+<ul>
+<li><code>libinstall</code></li>
+<li><code>libuninstall</code></li>
+</ul><p>These two targets require the existence of the variable <code>LIBINSTALL_FILES</code>,
+which should be set to all the files that you want to install in the
+library directory (usually %.mli, %.cmi, %.cma, %.cmxa, %.a and possibly
+further C-libraries).  The target <code>libinstall</code> has the dependency <code>all</code>
+to force compilation of the library so make sure you define target <code>all</code>
+in your Makefile appropriately.</p>
+
+<p>The targets inform the user about the configured install path and ask for
+confirmation to (un)install there.  If you want to use them, it is often a
+good idea to just alias them in your Makefile to <code>install</code> and <code>uninstall</code>
+respectively.</p>
+
+<p>Two other targets allow installation of files into a particular directory
+(without using <code>ocamlfind</code>):</p>
+
+<ul>
+<li><code>rawinstall</code></li>
+<li><code>rawuninstall</code></li>
+</ul><h3>
+<a name="building-toplevels" class="anchor" href="#building-toplevels"><span class="octicon octicon-link"></span></a>Building toplevels</h3>
+
+<p>There is just one target for this:</p>
+
+<ul>
+<li><code>top</code></li>
+</ul><p>The generated file can be used immediately for interactive sessions - even
+with scanners, parsers, C-files, etc.!</p>
+
+<h3>
+<a name="generating-documentation" class="anchor" href="#generating-documentation"><span class="octicon octicon-link"></span></a>Generating documentation</h3>
+
+<p>The following targets are supported:</p>
+
+<div class="highlight highlight-text"><pre>htdoc      - generates HTML-documentation
+ladoc      - generates Latex-documentation
+psdoc      - generates PostScript-documentation
+pdfdoc     - generates PDF-documentation
+doc        - generates all supported forms of documentation
+clean-doc  - generates all supported forms of documentation
+</pre></div>
+
+<p>All of them generate a sub-directory <code>doc</code>.  More precisely, for HTML it
+is <code>doc/$(RESULT)/html</code> and for Latex, PostScript and PDF the directory
+<code>doc/$(RESULT)/latex</code>.  See the OCamldoc-manual for details and the optional
+variables below for settings you can control.</p>
+
+<h3>
+<a name="handling-subprojects" class="anchor" href="#handling-subprojects"><span class="octicon octicon-link"></span></a>Handling subprojects</h3>
+
+<p>You can have several targets in the same directory and manage them from
+within an single <code>Makefile</code>.</p>
+
+<p>Give each subproject a name, e.g. <code>p1</code>, <code>p2</code>, etc.  Then you export settings
+specific to each project by using variables of the form <code>PROJ_p1</code>, <code>PROJ_p2</code>,
+etc.  E.g.:</p>
+
+<div class="highlight highlight-makefile"><pre><span class="cp">define PROJ_p1</span>
+  <span class="nv">SOURCES</span><span class="o">=</span><span class="s2">"foo.ml main.ml"</span>
+  <span class="nv">RESULT</span><span class="o">=</span><span class="s2">"p1"</span>
+  <span class="nv">OCAMLFLAGS</span><span class="o">=</span><span class="s2">"-unsafe"</span>
+<span class="cp">endef</span>
+<span class="k">export</span> <span class="nv">PROJ_p1</span>
+
+<span class="cp">define PROJ_p2</span>
+  ...
+<span class="cp">endef</span>
+<span class="k">export</span> <span class="nv">PROJ_p2</span>
+</pre></div>
+
+<p>You may also export common settings used by all projects directly, e.g.:</p>
+
+<div class="highlight highlight-makefile"><pre><span class="k">export </span><span class="nv">THREADS</span> <span class="o">=</span> y
+</pre></div>
+
+<p>Now is a good time to define which projects should be affected by commands
+by default.  E.g.:</p>
+
+<div class="highlight highlight-makefile"><pre><span class="cp">ifndef SUBPROJS</span>
+  <span class="nb">export </span><span class="nv">SUBPROJS</span> <span class="o">=</span> p1 p2
+<span class="cp">endif</span>
+</pre></div>
+
+<p>This will automatically generate a given target for all those subprojects
+if this variable has not been defined in the shell environment or in the
+command line of the make-invocation by the user.  E.g., <code>make dc</code> will
+generate debug code for all subprojects.</p>
+
+<p>Now you need to define a default action for your subprojects if <code>make</code>
+has been called without arguments:</p>
+
+<div class="highlight highlight-makefile"><pre><span class="nf">all</span><span class="o">:</span> <span class="n">bc</span>
+</pre></div>
+
+<p>This will build byte code by default for all subprojects.</p>
+
+<p>Finally, you'll have to define a catch-all target that uses the target provided
+by the user for all subprojects.  Just add (assuming that OCAMLMAKEFILE has
+been defined appropriately):</p>
+
+<p>%:
+          <a href="https://github.com/make" class="user-mention">@make</a> -f $(OCAMLMAKEFILE) subprojs SUBTARGET=$@</p>
+
+<p>See the <code>threads</code>-directory in the distribution for a short example!</p>
+
+<h3>
+<a name="optional-ocamlmakefile-variables" class="anchor" href="#optional-ocamlmakefile-variables"><span class="octicon octicon-link"></span></a>Optional <code>OCamlMakefile</code> variables</h3>
+
+<div class="highlight highlight-text"><pre>* LIB_PACK_NAME - packs all modules of a library into a module whose
+                  name is given in variable LIB_PACK_NAME.
+
+* RES_CLIB_SUF  - when building a library that contains C-stubs, this
+                  variable controls the suffix appended to the name of
+                  the C-library (default: _stubs).
+
+* THREADS       - say THREADS = yes if you need thread support compiled in,
+                  otherwise leave it away.
+
+* VMTHREADS     - say VMTHREADS = yes if you want to force VM-level
+                  scheduling of threads (byte-code only).
+
+* ANNOTATE      - say ANNOTATE = yes to generate type annotation files
+                  (.annot) to support displaying of type information
+                  in editors.
+
+* USE_CAMLP4    - say USE_CAMLP4 = yes in your Makefile if you
+                  want to include the camlp4 directory during the build
+                  process, otherwise leave it away.
+
+* INCDIRS       - directories that should be searched for .cmi- and
+                  .cmo-files.  You need not write -I ... - just the
+                  plain names.
+* LIBDIRS       - directories that should be searched for libraries
+                  Also just put the plain paths into this variable
+* EXTLIBDIRS    - Same as LIBDIRS, but paths in this variable are
+                  also added to the binary via the -R-flag so that
+                  dynamic libraries in non-standard places can be found.
+* RESULTDEPS    - Targets on which results (executables or libraries)
+                  should additionally depend.
+
+* PACKS         - adds packages under control of findlib.
+
+* PREDS         - specifies findlib-predicates.
+
+* LIBS          - OCaml-libraries that should be linked (just plain names).
+                  E.g. if you want to link the Str-library, just write
+                  str (without quotes).  The new OCaml-compiler handles
+                  libraries in such a way that they "remember" whether
+                  they have to be linked against a C-library and it gets
+                  linked in automatically.  If there is a slash in the
+                  library name (such as ./str or lib/foo) then make is
+                  told that the generated files depend on the library.
+                  This helps to ensure that changes to your libraries
+                  are taken into account, which is important if you are
+                  regenerating your libraries frequently.
+
+* CLIBS         - C-libraries that should be linked (just plain names).
+
+* PRE_TARGETS   - set this to a list of target files that you want
+                  to have built before dependency calculation actually
+                  takes place.  E.g. use this to automatically compile
+                  modules needed by camlp4, which have to be available
+                  before other modules can be parsed at all.
+
+                  ** WARNING **: the files mentioned in this variable
+                  will be removed when make clean is executed!
+
+* LIBINSTALL_FILES - the files of a library that should be installed
+                    using findlib.  Default:
+
+                      $(RESULT).mli $(RESULT).cmi $(RESULT).cma
+                      $(RESULT).cmxa $(RESULT).a lib$(RESULT).a
+
+* OCAML_LIB_INSTALL - target directory for rawinstall/rawuninstall.
+                      (default: $(OCAMLLIBPATH)/contrib)
+
+* DOC_FILES     - names of files from which documentation is generated.
+                  (default: all .mli-files in your $(SOURCES)).
+
+* DOC_DIR       - name of directory where documentation should be stored.
+
+* OCAMLFLAGS    - flags passed to the compilers
+* OCAMLBCFLAGS  - flags passed to the byte code compiler only
+* OCAMLNCFLAGS  - flags passed to the native code compiler only
+
+* OCAMLLDFLAGS  - flags passed to the OCaml-linker
+* OCAMLBLDFLAGS - flags passed to the OCaml-linker when linking byte code
+* OCAMLNLDFLAGS - flags passed to the OCaml-linker when linking
+                  native code
+
+* OCAMLMKLIB_FLAGS - flags passed to the OCaml library tool
+
+* OCAMLCPFLAGS  - profiling flags passed to ocamlcp (default: a)
+
+* PPFLAGS       - additional flags passed to the preprocessor
+                  (default: none)
+
+* LFLAGS        - flags passed to ocamllex
+* YFLAGS        - flags passed to ocamlyacc
+* IDLFLAGS      - flags passed to camlidl
+
+* OCAMLDOCFLAGS - flags passed to ocamldoc
+
+* OCAMLFIND_INSTFLAGS - flags passed to ocamlfind during installation
+                        (default: none)
+
+* DVIPSFLAGS    - flags passed to dvips
+                  (when generating documentation in PostScript).
+
+* STATIC        - set this variable if you want to force creation
+                  of static libraries
+
+* CC            - the C-compiler to be used
+* CXX           - the C++-compiler to be used
+
+* CFLAGS        - additional flags passed to the C-compiler.
+
+                  The flag -DNATIVE_CODE will be passed automatically if
+                  you choose to build native code.  This allows you to
+                  compile your C-files conditionally.  But please note:
+                  You should do a make clean or remove the object files
+                  manually or touch the %.c-files: otherwise, they may
+                  not be correctly recompiled between different builds.
+
+* CXXFLAGS      - additional flags passed to the C++-compiler.
+
+* CPPFLAGS      - additional flags passed to the C-preprocessor.
+
+* CFRAMEWORKS   - Objective-C framework to pass to linker on MacOS X.
+
+* LDFLAGS       - additional flags passed to the C-linker
+
+* RPATH_FLAG    - flag passed through to the C-linker to set a path for
+                  dynamic libraries.  May need to be set by user on
+                  exotic platforms.  (default: -R).
+
+* ELF_RPATH_FLAG - this flag is used to set the rpath on ELF-platforms.
+                  (default: -R)
+
+* ELF_RPATH     - if this flag is yes, then the RPATH_FLAG will be
+                  passed by -Wl to the linker as normal on ELF-platforms.
+
+* OCAMLLIBPATH  - path to the OCaml-standard-libraries
+                  (first default: $(OCAMLC) -where)
+                  (second default: /usr/local/lib/ocaml)
+
+* OCAML_DEFAULT_DIRS - additional path in which the user can supply
+                      default directories to his own collection
+                      of libraries.  The idea is to pass this as an
+                      environment variable so that the Makefiles do not
+                      have to contain this path all the time.
+
+* OCAMLFIND     - ocamlfind from findlib       (default: ocamlfind)
+* OCAML         - OCaml interpreter            (default: ocaml)
+* OCAMLC        - byte-code compiler           (default: ocamlc)
+* OCAMLOPT      - native-code compiler         (default: ocamlopt)
+* OCAMLMKTOP    - top-level compiler           (default: ocamlmktop)
+* OCAMLCP       - profiling byte-code compiler (default: ocamlcp)
+* OCAMLDEP      - dependency generator         (default: ocamldep)
+* OCAMLLEX      - scanner generator            (default: ocamllex)
+* OCAMLYACC     - parser generator             (default: ocamlyacc)
+* OCAMLMKLIB    - tool to create libraries     (default: ocamlmklib)
+* CAMLIDL       - IDL-code generator           (default: camlidl)
+* CAMLIDLDLL    - IDL-utility                  (default: camlidldll)
+* CAMLP4        - camlp4 preprocessor          (default: camlp4)
+* OCAMLDOC      - OCamldoc-command             (default: ocamldoc)
+
+* LATEX         - Latex-processor              (default: latex)
+* DVIPS         - dvips-command                (default: dvips)
+* PS2PDF        - PostScript-to-PDF converter  (default: ps2pdf)
+
+* CAMELEON_REPORT - report tool of Cameleon    (default: report)
+* CAMELEON_REPORT_FLAGS - flags for the report tool of Cameleon
+
+* CAMELEON_ZOGGY - zoggy tool of Cameleon
+                  (default: camlp4o pa_zog.cma pr_o.cmo)
+* CAMELEON_ZOGGY_FLAGS - flags for the zoggy tool of Cameleon
+
+* OCAML_GLADECC - Glade compiler for OCaml  (default: lablgladecc2)
+* OCAML_GLADECC_FLAGS - flags for the Glade compiler
+
+* OXRIDL        - OXRIDL-generator  (default: oxridl)
+
+* NOIDLHEADER   - set to yes to prohibit OCamlMakefile from using
+                  the default camlidl-flag -header.
+
+* NO_CUSTOM     - Prevent linking in custom mode.
+
+* QUIET         - unsetting this variable (e.g. make QUIET=)
+                  will print all executed commands, including intermediate
+                  ones.  This allows more comfortable debugging when
+                  things go wrong during a build.
+
+* REALLY_QUIET  - when set this flag turns off output from some commands.
+
+* OCAMLMAKEFILE - location of (= path to) this OCamlMakefile.
+                  Because it calls itself recursively, it has to know
+                  where it is. (default: OCamlMakefile = local directory)
+
+* BCSUFFIX      - Suffix for all byte-code files.  E.g.:
+
+                    RESULT   = foo
+                    BCSUFFIX = _bc
+
+                  This will produce byte-code executables/libraries with
+                  basename foo_bc.
+
+* NCSUFFIX      - Similar to BCSUFFIX, but for native-code files.
+* TOPSUFFIX     - Suffix added to toplevel interpreters (default: .top)
+
+* SUBPROJS      - variable containing the names of subprojects to be
+                  compiled.
+
+* SUBTARGET     - target to be built for all projects in variable
+                  SUBPROJS.
+</pre></div>
+
+<h3>
+<a name="optional-variables-for-windows-users" class="anchor" href="#optional-variables-for-windows-users"><span class="octicon octicon-link"></span></a>Optional variables for Windows users</h3>
+
+<div class="highlight highlight-text"><pre>* MINGW         - variable to detect the MINGW-environment
+* MSVC          - variable to detect the MSVC-compiler
+</pre></div>
+
+<hr><h2>
+<a name="contact-information-and-contributing" class="anchor" href="#contact-information-and-contributing"><span class="octicon octicon-link"></span></a>Contact Information and Contributing</h2>
+
+<p>In the case of bugs, feature requests, contributions and similar, you can
+contact me here: <a href="mailto:markus.mottl@gmail.com">markus.mottl@gmail.com</a></p>
+
+<p>Up-to-date information concerning this tool should be available at:
+<a href="http://mmottl.github.io/ocaml-makefile">http://mmottl.github.io/ocaml-makefile</a></p>
+
+<p>Enjoy!</p>
+
+<p>Markus Mottl in Rutherford, NJ on July 10, 2012</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Ocaml-makefile maintained by <a href="https://github.com/mmottl">mmottl</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
