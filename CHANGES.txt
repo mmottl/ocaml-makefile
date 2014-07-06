@@ -1,3 +1,5 @@
+2014-07-05: Moved to GitHub.
+
 2012-07-15: Rewrote README in Markdown.
 
 2012-06-29: Added support for mingw64.
