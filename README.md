@@ -56,8 +56,9 @@ appropriate directory.  There are two ways of making use of `OCamlMakefile`:
      be used, etc.  Copy it into the directory of the project to be compiled.
      Add the following statement as last line to your `Makefile`:
 
-         :::makefile
-         -include OCamlMakefile
+     ```makefile
+     -include OCamlMakefile
+     ```
 
   2. Put `OCamlMakefile` somewhere else in your system.  In this case you
      will have to set the variable `OCAMLMAKEFILE` in your project-specific
@@ -75,9 +76,10 @@ Put all the sources necessary for a target into variable `SOURCES`.  Then set
 you should _not_ specify the suffix (`.cma`, `.cmxa`, `.a`).  It will be
 added automatically if you specify that you want to build a library.
 
-    :::text
-    **      Don't forget to add the `.mli`-files, too!            **
-    **  Don't forget that the order of the source files matters!  **
+```text
+**      Don't forget to add the `.mli`-files, too!            **
+**  Don't forget that the order of the source files matters!  **
+```
 
 The order is important, because it matters during linking due to potential
 side effects caused at program startup.  This is why `OCamlMakefile` does not
@@ -89,18 +91,20 @@ be correct.
 The minimum of your `Makefile` looks like this (assuming that `OCamlMakefile`
 is in the search path of `make`):
 
-    :::makefile
-    -include OCamlMakefile
+```makefile
+-include OCamlMakefile
+```
 
 This will assume that you want to compile a file `foo.ml` to a binary `foo`.
 
 Otherwise, your Makefile will probably contain something like this:
 
-    :::makefile
-    SOURCES = foo.ml
-    RESULT  = foo
+```makefile
+SOURCES = foo.ml
+RESULT  = foo
 
-    -include OCamlMakefile
+-include OCamlMakefile
+```
 
 Be careful with the names you put into these variables.  If they are wrong,
 a `make clean` might erase the wrong files!
@@ -108,13 +112,14 @@ a `make clean` might erase the wrong files!
 A simple `make` will generate a byte-code executable.  If you want to change
 this, you may add an `all`-rule that generates something else.  For example:
 
-    :::makefile
-    SOURCES = foo.ml
-    RESULT  = foo
+```makefile
+SOURCES = foo.ml
+RESULT  = foo
 
-    all: native-code-library
+all: native-code-library
 
-    -include OCamlMakefile
+-include OCamlMakefile
+```
 
 This will build a native-code library `foo.cmxa` (+ `foo.a`) from file
 `foo.ml`.
@@ -122,8 +127,9 @@ This will build a native-code library `foo.cmxa` (+ `foo.a`) from file
 You may even build several targets at once.  To produce byte- and native-code
 executables with one `make`, add the following rule:
 
-    :::makefile
-    all: byte-code native-code
+```makefile
+all: byte-code native-code
+```
 
 You will probably want to use a different suffix for each of these targets
 so that the result will not be overwritten.  See the optional variables
@@ -133,26 +139,27 @@ You may also tell `make` at the command-line what kind of target to produce
 (e.g. `make nc`).  Here all the possibilities with shortcuts between
 parenthesis:
 
-    :::text
-    byte-code                      (bc)
-    byte-code-nolink               (bcnl) - no linking stage
-    byte-code-library              (bcl)
-    native-code                    (nc)
-    native-code-nolink             (ncnl) - no linking stage
-    native-code-library            (ncl)
-    debug-code                     (dc)
-    debug-code-nolink              (dcnl) - no linking stage
-    debug-code-library             (dcl)
-    profiling-byte-code            (pbc)
-    profiling-byte-code-library    (pbcl)
-    profiling-native-code          (pnc)
-    profiling-native-code-library  (pncl)
-    byte-code-dll                  (bcd)
-    native-code-dll                (ncd)
-    pack-byte-code                 (pabc)
-    pack-native-code               (panc)
-    toplevel                       (top)
-    subprojs
+```text
+byte-code                      (bc)
+byte-code-nolink               (bcnl) - no linking stage
+byte-code-library              (bcl)
+native-code                    (nc)
+native-code-nolink             (ncnl) - no linking stage
+native-code-library            (ncl)
+debug-code                     (dc)
+debug-code-nolink              (dcnl) - no linking stage
+debug-code-library             (dcl)
+profiling-byte-code            (pbc)
+profiling-byte-code-library    (pbcl)
+profiling-native-code          (pnc)
+profiling-native-code-library  (pncl)
+byte-code-dll                  (bcd)
+native-code-dll                (ncd)
+pack-byte-code                 (pabc)
+pack-native-code               (panc)
+toplevel                       (top)
+subprojs
+```
 
 Here is a short note concerning building and linking byte code libraries
 with C-files:
@@ -229,9 +236,10 @@ Therefore, you have to cooperate a bit with `OCamlMakefile` to let
 preprocessing happen automatically.  Basically, this only requires that you
 put a comment into the first line of files that should be preprocessed, e.g.:
 
-    :::ocaml
-    (*pp cat *)
-    (* ... rest of program ... *)
+```ocaml
+(*pp cat *)
+(* ... rest of program ... *)
+```
 
 `OCamlMakefile` looks at the first line of your files, and if it finds a
 comment that starts with "`(*pp`", then it will assume that the rest of
@@ -242,9 +250,10 @@ output the source text again without changing it.
 If, for example, you were an advocate of the "revised syntax", which is
 supported by the `camlp4` preprocessor, you could simply write:
 
-    :::ocaml
-    (*pp camlp4r *)
-    (* ... rest of program in revised syntax ... *)
+```ocaml
+(*pp camlp4r *)
+(* ... rest of program in revised syntax ... *)
+```
 
 If you want to write your own syntax extensions, just take a look at the
 example in the directory `camlp4`: it implements the "`repeat ... until`"
@@ -288,13 +297,14 @@ with scanners, parsers, C-files, etc.!
 
 The following targets are supported:
 
-    :::text
-    htdoc      - generates HTML-documentation
-    ladoc      - generates Latex-documentation
-    psdoc      - generates PostScript-documentation
-    pdfdoc     - generates PDF-documentation
-    doc        - generates all supported forms of documentation
-    clean-doc  - generates all supported forms of documentation
+```text
+htdoc      - generates HTML-documentation
+ladoc      - generates Latex-documentation
+psdoc      - generates PostScript-documentation
+pdfdoc     - generates PDF-documentation
+doc        - generates all supported forms of documentation
+clean-doc  - generates all supported forms of documentation
+```
 
 All of them generate a sub-directory `doc`.  More precisely, for HTML it
 is `doc/$(RESULT)/html` and for Latex, PostScript and PDF the directory
@@ -310,31 +320,34 @@ Give each subproject a name, e.g. `p1`, `p2`, etc.  Then you export settings
 specific to each project by using variables of the form `PROJ_p1`, `PROJ_p2`,
 etc.  E.g.:
 
-    :::makefile
-    define PROJ_p1
-      SOURCES="foo.ml main.ml"
-      RESULT="p1"
-      OCAMLFLAGS="-unsafe"
-    endef
-    export PROJ_p1
+```makefile
+define PROJ_p1
+  SOURCES="foo.ml main.ml"
+  RESULT="p1"
+  OCAMLFLAGS="-unsafe"
+endef
+export PROJ_p1
 
-    define PROJ_p2
-      ...
-    endef
-    export PROJ_p2
+define PROJ_p2
+  ...
+endef
+export PROJ_p2
+```
 
 You may also export common settings used by all projects directly, e.g.:
 
-    :::makefile
-    export THREADS = y
+```makefile
+export THREADS = y
+```
 
 Now is a good time to define which projects should be affected by commands
 by default.  E.g.:
 
-    :::makefile
-    ifndef SUBPROJS
-      export SUBPROJS = p1 p2
-    endif
+```makefile
+ifndef SUBPROJS
+  export SUBPROJS = p1 p2
+endif
+```
 
 This will automatically generate a given target for all those subprojects
 if this variable has not been defined in the shell environment or in the
@@ -344,8 +357,9 @@ generate debug code for all subprojects.
 Now you need to define a default action for your subprojects if `make`
 has been called without arguments:
 
-    :::makefile
-    all: bc
+```makefile
+all: bc
+```
 
 This will build byte code by default for all subprojects.
 
@@ -360,220 +374,222 @@ See the `threads`-directory in the distribution for a short example!
 
 ### Optional `OCamlMakefile` variables
 
-    :::text
-    * LIB_PACK_NAME - packs all modules of a library into a module whose
-                      name is given in variable LIB_PACK_NAME.
+```text
+* LIB_PACK_NAME - packs all modules of a library into a module whose
+                  name is given in variable LIB_PACK_NAME.
 
-    * RES_CLIB_SUF  - when building a library that contains C-stubs, this
-                      variable controls the suffix appended to the name of
-                      the C-library (default: _stubs).
+* RES_CLIB_SUF  - when building a library that contains C-stubs, this
+                  variable controls the suffix appended to the name of
+                  the C-library (default: _stubs).
 
-    * THREADS       - say THREADS = yes if you need thread support compiled in,
-                      otherwise leave it away.
+* THREADS       - say THREADS = yes if you need thread support compiled in,
+                  otherwise leave it away.
 
-    * VMTHREADS     - say VMTHREADS = yes if you want to force VM-level
-                      scheduling of threads (byte-code only).
+* VMTHREADS     - say VMTHREADS = yes if you want to force VM-level
+                  scheduling of threads (byte-code only).
 
-    * ANNOTATE      - say ANNOTATE = yes to generate type annotation files
-                      (.annot) to support displaying of type information
-                      in editors.
+* ANNOTATE      - say ANNOTATE = yes to generate type annotation files
+                  (.annot) to support displaying of type information
+                  in editors.
 
-    * USE_CAMLP4    - say USE_CAMLP4 = yes in your Makefile if you
-                      want to include the camlp4 directory during the build
-                      process, otherwise leave it away.
+* USE_CAMLP4    - say USE_CAMLP4 = yes in your Makefile if you
+                  want to include the camlp4 directory during the build
+                  process, otherwise leave it away.
 
-    * INCDIRS       - directories that should be searched for .cmi- and
-                      .cmo-files.  You need not write -I ... - just the
-                      plain names.
-    * LIBDIRS       - directories that should be searched for libraries
-                      Also just put the plain paths into this variable
-    * EXTLIBDIRS    - Same as LIBDIRS, but paths in this variable are
-                      also added to the binary via the -R-flag so that
-                      dynamic libraries in non-standard places can be found.
-    * RESULTDEPS    - Targets on which results (executables or libraries)
-                      should additionally depend.
+* INCDIRS       - directories that should be searched for .cmi- and
+                  .cmo-files.  You need not write -I ... - just the
+                  plain names.
+* LIBDIRS       - directories that should be searched for libraries
+                  Also just put the plain paths into this variable
+* EXTLIBDIRS    - Same as LIBDIRS, but paths in this variable are
+                  also added to the binary via the -R-flag so that
+                  dynamic libraries in non-standard places can be found.
+* RESULTDEPS    - Targets on which results (executables or libraries)
+                  should additionally depend.
 
-    * PACKS         - adds packages under control of findlib.
+* PACKS         - adds packages under control of findlib.
 
-    * PREDS         - specifies findlib-predicates.
+* PREDS         - specifies findlib-predicates.
 
-    * LIBS          - OCaml-libraries that should be linked (just plain names).
-                      E.g. if you want to link the Str-library, just write
-                      str (without quotes).  The new OCaml-compiler handles
-                      libraries in such a way that they "remember" whether
-                      they have to be linked against a C-library and it gets
-                      linked in automatically.  If there is a slash in the
-                      library name (such as ./str or lib/foo) then make is
-                      told that the generated files depend on the library.
-                      This helps to ensure that changes to your libraries
-                      are taken into account, which is important if you are
-                      regenerating your libraries frequently.
+* LIBS          - OCaml-libraries that should be linked (just plain names).
+                  E.g. if you want to link the Str-library, just write
+                  str (without quotes).  The new OCaml-compiler handles
+                  libraries in such a way that they "remember" whether
+                  they have to be linked against a C-library and it gets
+                  linked in automatically.  If there is a slash in the
+                  library name (such as ./str or lib/foo) then make is
+                  told that the generated files depend on the library.
+                  This helps to ensure that changes to your libraries
+                  are taken into account, which is important if you are
+                  regenerating your libraries frequently.
 
-    * CLIBS         - C-libraries that should be linked (just plain names).
+* CLIBS         - C-libraries that should be linked (just plain names).
 
-    * PRE_TARGETS   - set this to a list of target files that you want
-                      to have built before dependency calculation actually
-                      takes place.  E.g. use this to automatically compile
-                      modules needed by camlp4, which have to be available
-                      before other modules can be parsed at all.
+* PRE_TARGETS   - set this to a list of target files that you want
+                  to have built before dependency calculation actually
+                  takes place.  E.g. use this to automatically compile
+                  modules needed by camlp4, which have to be available
+                  before other modules can be parsed at all.
 
-                      ** WARNING **: the files mentioned in this variable
-                      will be removed when make clean is executed!
+                  ** WARNING **: the files mentioned in this variable
+                  will be removed when make clean is executed!
 
-    * LIBINSTALL_FILES - the files of a library that should be installed
-                        using findlib.  Default:
+* LIBINSTALL_FILES - the files of a library that should be installed
+                    using findlib.  Default:
 
-                          $(RESULT).mli $(RESULT).cmi $(RESULT).cma
-                          $(RESULT).cmxa $(RESULT).a lib$(RESULT).a
+                      $(RESULT).mli $(RESULT).cmi $(RESULT).cma
+                      $(RESULT).cmxa $(RESULT).a lib$(RESULT).a
 
-    * OCAML_LIB_INSTALL - target directory for rawinstall/rawuninstall.
-                          (default: $(OCAMLLIBPATH)/contrib)
+* OCAML_LIB_INSTALL - target directory for rawinstall/rawuninstall.
+                      (default: $(OCAMLLIBPATH)/contrib)
 
-    * DOC_FILES     - names of files from which documentation is generated.
-                      (default: all .mli-files in your $(SOURCES)).
+* DOC_FILES     - names of files from which documentation is generated.
+                  (default: all .mli-files in your $(SOURCES)).
 
-    * DOC_DIR       - name of directory where documentation should be stored.
+* DOC_DIR       - name of directory where documentation should be stored.
 
-    * OCAMLFLAGS    - flags passed to the compilers
-    * OCAMLBCFLAGS  - flags passed to the byte code compiler only
-    * OCAMLNCFLAGS  - flags passed to the native code compiler only
+* OCAMLFLAGS    - flags passed to the compilers
+* OCAMLBCFLAGS  - flags passed to the byte code compiler only
+* OCAMLNCFLAGS  - flags passed to the native code compiler only
 
-    * OCAMLLDFLAGS  - flags passed to the OCaml-linker
-    * OCAMLBLDFLAGS - flags passed to the OCaml-linker when linking byte code
-    * OCAMLNLDFLAGS - flags passed to the OCaml-linker when linking
-                      native code
+* OCAMLLDFLAGS  - flags passed to the OCaml-linker
+* OCAMLBLDFLAGS - flags passed to the OCaml-linker when linking byte code
+* OCAMLNLDFLAGS - flags passed to the OCaml-linker when linking
+                  native code
 
-    * OCAMLMKLIB_FLAGS - flags passed to the OCaml library tool
+* OCAMLMKLIB_FLAGS - flags passed to the OCaml library tool
 
-    * OCAMLCPFLAGS  - profiling flags passed to ocamlcp (default: a)
+* OCAMLCPFLAGS  - profiling flags passed to ocamlcp (default: a)
 
-    * PPFLAGS       - additional flags passed to the preprocessor
-                      (default: none)
+* PPFLAGS       - additional flags passed to the preprocessor
+                  (default: none)
 
-    * LFLAGS        - flags passed to ocamllex
-    * YFLAGS        - flags passed to ocamlyacc
-    * IDLFLAGS      - flags passed to camlidl
+* LFLAGS        - flags passed to ocamllex
+* YFLAGS        - flags passed to ocamlyacc
+* IDLFLAGS      - flags passed to camlidl
 
-    * OCAMLDOCFLAGS - flags passed to ocamldoc
+* OCAMLDOCFLAGS - flags passed to ocamldoc
 
-    * OCAMLFIND_INSTFLAGS - flags passed to ocamlfind during installation
-                            (default: none)
+* OCAMLFIND_INSTFLAGS - flags passed to ocamlfind during installation
+                        (default: none)
 
-    * DVIPSFLAGS    - flags passed to dvips
-                      (when generating documentation in PostScript).
+* DVIPSFLAGS    - flags passed to dvips
+                  (when generating documentation in PostScript).
 
-    * STATIC        - set this variable if you want to force creation
-                      of static libraries
+* STATIC        - set this variable if you want to force creation
+                  of static libraries
 
-    * CC            - the C-compiler to be used
-    * CXX           - the C++-compiler to be used
+* CC            - the C-compiler to be used
+* CXX           - the C++-compiler to be used
 
-    * CFLAGS        - additional flags passed to the C-compiler.
+* CFLAGS        - additional flags passed to the C-compiler.
 
-                      The flag -DNATIVE_CODE will be passed automatically if
-                      you choose to build native code.  This allows you to
-                      compile your C-files conditionally.  But please note:
-                      You should do a make clean or remove the object files
-                      manually or touch the %.c-files: otherwise, they may
-                      not be correctly recompiled between different builds.
+                  The flag -DNATIVE_CODE will be passed automatically if
+                  you choose to build native code.  This allows you to
+                  compile your C-files conditionally.  But please note:
+                  You should do a make clean or remove the object files
+                  manually or touch the %.c-files: otherwise, they may
+                  not be correctly recompiled between different builds.
 
-    * CXXFLAGS      - additional flags passed to the C++-compiler.
+* CXXFLAGS      - additional flags passed to the C++-compiler.
 
-    * CPPFLAGS      - additional flags passed to the C-preprocessor.
+* CPPFLAGS      - additional flags passed to the C-preprocessor.
 
-    * CFRAMEWORKS   - Objective-C framework to pass to linker on MacOS X.
+* CFRAMEWORKS   - Objective-C framework to pass to linker on MacOS X.
 
-    * LDFLAGS       - additional flags passed to the C-linker
+* LDFLAGS       - additional flags passed to the C-linker
 
-    * RPATH_FLAG    - flag passed through to the C-linker to set a path for
-                      dynamic libraries.  May need to be set by user on
-                      exotic platforms.  (default: -R).
+* RPATH_FLAG    - flag passed through to the C-linker to set a path for
+                  dynamic libraries.  May need to be set by user on
+                  exotic platforms.  (default: -R).
 
-    * ELF_RPATH_FLAG - this flag is used to set the rpath on ELF-platforms.
-                      (default: -R)
+* ELF_RPATH_FLAG - this flag is used to set the rpath on ELF-platforms.
+                  (default: -R)
 
-    * ELF_RPATH     - if this flag is yes, then the RPATH_FLAG will be
-                      passed by -Wl to the linker as normal on ELF-platforms.
+* ELF_RPATH     - if this flag is yes, then the RPATH_FLAG will be
+                  passed by -Wl to the linker as normal on ELF-platforms.
 
-    * OCAMLLIBPATH  - path to the OCaml-standard-libraries
-                      (first default: $(OCAMLC) -where)
-                      (second default: /usr/local/lib/ocaml)
+* OCAMLLIBPATH  - path to the OCaml-standard-libraries
+                  (first default: $(OCAMLC) -where)
+                  (second default: /usr/local/lib/ocaml)
 
-    * OCAML_DEFAULT_DIRS - additional path in which the user can supply
-                          default directories to his own collection
-                          of libraries.  The idea is to pass this as an
-                          environment variable so that the Makefiles do not
-                          have to contain this path all the time.
+* OCAML_DEFAULT_DIRS - additional path in which the user can supply
+                      default directories to his own collection
+                      of libraries.  The idea is to pass this as an
+                      environment variable so that the Makefiles do not
+                      have to contain this path all the time.
 
-    * OCAMLFIND     - ocamlfind from findlib       (default: ocamlfind)
-    * OCAML         - OCaml interpreter            (default: ocaml)
-    * OCAMLC        - byte-code compiler           (default: ocamlc)
-    * OCAMLOPT      - native-code compiler         (default: ocamlopt)
-    * OCAMLMKTOP    - top-level compiler           (default: ocamlmktop)
-    * OCAMLCP       - profiling byte-code compiler (default: ocamlcp)
-    * OCAMLDEP      - dependency generator         (default: ocamldep)
-    * OCAMLLEX      - scanner generator            (default: ocamllex)
-    * OCAMLYACC     - parser generator             (default: ocamlyacc)
-    * OCAMLMKLIB    - tool to create libraries     (default: ocamlmklib)
-    * CAMLIDL       - IDL-code generator           (default: camlidl)
-    * CAMLIDLDLL    - IDL-utility                  (default: camlidldll)
-    * CAMLP4        - camlp4 preprocessor          (default: camlp4)
-    * OCAMLDOC      - OCamldoc-command             (default: ocamldoc)
+* OCAMLFIND     - ocamlfind from findlib       (default: ocamlfind)
+* OCAML         - OCaml interpreter            (default: ocaml)
+* OCAMLC        - byte-code compiler           (default: ocamlc)
+* OCAMLOPT      - native-code compiler         (default: ocamlopt)
+* OCAMLMKTOP    - top-level compiler           (default: ocamlmktop)
+* OCAMLCP       - profiling byte-code compiler (default: ocamlcp)
+* OCAMLDEP      - dependency generator         (default: ocamldep)
+* OCAMLLEX      - scanner generator            (default: ocamllex)
+* OCAMLYACC     - parser generator             (default: ocamlyacc)
+* OCAMLMKLIB    - tool to create libraries     (default: ocamlmklib)
+* CAMLIDL       - IDL-code generator           (default: camlidl)
+* CAMLIDLDLL    - IDL-utility                  (default: camlidldll)
+* CAMLP4        - camlp4 preprocessor          (default: camlp4)
+* OCAMLDOC      - OCamldoc-command             (default: ocamldoc)
 
-    * LATEX         - Latex-processor              (default: latex)
-    * DVIPS         - dvips-command                (default: dvips)
-    * PS2PDF        - PostScript-to-PDF converter  (default: ps2pdf)
+* LATEX         - Latex-processor              (default: latex)
+* DVIPS         - dvips-command                (default: dvips)
+* PS2PDF        - PostScript-to-PDF converter  (default: ps2pdf)
 
-    * CAMELEON_REPORT - report tool of Cameleon    (default: report)
-    * CAMELEON_REPORT_FLAGS - flags for the report tool of Cameleon
+* CAMELEON_REPORT - report tool of Cameleon    (default: report)
+* CAMELEON_REPORT_FLAGS - flags for the report tool of Cameleon
 
-    * CAMELEON_ZOGGY - zoggy tool of Cameleon
-                      (default: camlp4o pa_zog.cma pr_o.cmo)
-    * CAMELEON_ZOGGY_FLAGS - flags for the zoggy tool of Cameleon
+* CAMELEON_ZOGGY - zoggy tool of Cameleon
+                  (default: camlp4o pa_zog.cma pr_o.cmo)
+* CAMELEON_ZOGGY_FLAGS - flags for the zoggy tool of Cameleon
 
-    * OCAML_GLADECC - Glade compiler for OCaml  (default: lablgladecc2)
-    * OCAML_GLADECC_FLAGS - flags for the Glade compiler
+* OCAML_GLADECC - Glade compiler for OCaml  (default: lablgladecc2)
+* OCAML_GLADECC_FLAGS - flags for the Glade compiler
 
-    * OXRIDL        - OXRIDL-generator  (default: oxridl)
+* OXRIDL        - OXRIDL-generator  (default: oxridl)
 
-    * NOIDLHEADER   - set to yes to prohibit OCamlMakefile from using
-                      the default camlidl-flag -header.
+* NOIDLHEADER   - set to yes to prohibit OCamlMakefile from using
+                  the default camlidl-flag -header.
 
-    * NO_CUSTOM     - Prevent linking in custom mode.
+* NO_CUSTOM     - Prevent linking in custom mode.
 
-    * QUIET         - unsetting this variable (e.g. make QUIET=)
-                      will print all executed commands, including intermediate
-                      ones.  This allows more comfortable debugging when
-                      things go wrong during a build.
+* QUIET         - unsetting this variable (e.g. make QUIET=)
+                  will print all executed commands, including intermediate
+                  ones.  This allows more comfortable debugging when
+                  things go wrong during a build.
 
-    * REALLY_QUIET  - when set this flag turns off output from some commands.
+* REALLY_QUIET  - when set this flag turns off output from some commands.
 
-    * OCAMLMAKEFILE - location of (= path to) this OCamlMakefile.
-                      Because it calls itself recursively, it has to know
-                      where it is. (default: OCamlMakefile = local directory)
+* OCAMLMAKEFILE - location of (= path to) this OCamlMakefile.
+                  Because it calls itself recursively, it has to know
+                  where it is. (default: OCamlMakefile = local directory)
 
-    * BCSUFFIX      - Suffix for all byte-code files.  E.g.:
+* BCSUFFIX      - Suffix for all byte-code files.  E.g.:
 
-                        RESULT   = foo
-                        BCSUFFIX = _bc
+                    RESULT   = foo
+                    BCSUFFIX = _bc
 
-                      This will produce byte-code executables/libraries with
-                      basename foo_bc.
+                  This will produce byte-code executables/libraries with
+                  basename foo_bc.
 
-    * NCSUFFIX      - Similar to BCSUFFIX, but for native-code files.
-    * TOPSUFFIX     - Suffix added to toplevel interpreters (default: .top)
+* NCSUFFIX      - Similar to BCSUFFIX, but for native-code files.
+* TOPSUFFIX     - Suffix added to toplevel interpreters (default: .top)
 
-    * SUBPROJS      - variable containing the names of subprojects to be
-                      compiled.
+* SUBPROJS      - variable containing the names of subprojects to be
+                  compiled.
 
-    * SUBTARGET     - target to be built for all projects in variable
-                      SUBPROJS.
+* SUBTARGET     - target to be built for all projects in variable
+                  SUBPROJS.
+```
 
 ### Optional variables for Windows users
 
-    :::text
-    * MINGW         - variable to detect the MINGW-environment
-    * MSVC          - variable to detect the MSVC-compiler
+```text
+* MINGW         - variable to detect the MINGW-environment
+* MSVC          - variable to detect the MSVC-compiler
+```
 
 ---------------------------------------------------------------------------
 
