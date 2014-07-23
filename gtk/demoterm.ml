@@ -17,7 +17,8 @@ module String = StringLabels
    decide to buffer their input in this case because its standard
    output isn't a terminal.  "cat -u" and ocaml are exceptions. *)
 
-let _ =
+let () =
+  let _locale_ = GtkMain.Main.init () in
   let inch, outch = Unix.open_process "ocaml" in
   let buffer_size = 10240 in
   let exitNoError () = exit 0 in
