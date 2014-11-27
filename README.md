@@ -526,8 +526,14 @@ See the `threads`-directory in the distribution for a short example!
 * OCAMLMKTOP    - top-level compiler           (default: ocamlmktop)
 * OCAMLCP       - profiling byte-code compiler (default: ocamlcp)
 * OCAMLDEP      - dependency generator         (default: ocamldep)
+
 * OCAMLLEX      - scanner generator            (default: ocamllex)
+                  Applies to .mll files.
+
 * OCAMLYACC     - parser generator             (default: ocamlyacc)
+                  Applies to .mly files.  A good alternative to the default is
+                  "menhir" if installed.
+
 * OCAMLMKLIB    - tool to create libraries     (default: ocamlmklib)
 * CAMLIDL       - IDL-code generator           (default: camlidl)
 * CAMLIDLDLL    - IDL-utility                  (default: camlidldll)
@@ -604,4 +610,4 @@ Up-to-date information concerning this tool should be available at:
 
 Enjoy!
 
-Markus Mottl in Rutherford, NJ on July 10, 2012
+Markus Mottl in Rutherford, NJ on November 26, 2014
