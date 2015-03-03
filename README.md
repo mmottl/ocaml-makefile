@@ -322,7 +322,7 @@ etc.  E.g.:
 
 ```makefile
 define PROJ_p1
-  SOURCES="foo.ml main.ml"
+  SOURCES=foo.ml main.ml
   RESULT="p1"
   OCAMLFLAGS="-unsafe"
 endef
@@ -610,4 +610,4 @@ Up-to-date information concerning this tool should be available at:
 
 Enjoy!
 
-Markus Mottl in Rutherford, NJ on November 26, 2014
+Markus Mottl in Rutherford, NJ on March 2, 2015
