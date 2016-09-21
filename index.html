@@ -62,7 +62,7 @@ projects:</p>
 
 <ul>
 <li><a href="http://omake.metaprl.org/index.html">OMake</a></li>
-<li><a href="http://brion.inria.fr/gallium/index.php/Ocamlbuild">Ocamlbuild</a></li>
+<li><a href="https://ocaml.org/learn/tutorials/ocamlbuild">Ocamlbuild</a></li>
 <li><a href="http://oasis.forge.ocamlcore.org">Oasis</a></li>
 </ul>
 </li>
@@ -367,7 +367,7 @@ specific to each project by using variables of the form <code>PROJ_p1</code>, <c
 etc.  E.g.:</p>
 
 <div class="highlight highlight-source-makefile"><pre><span class="pl-k">define</span> <span class="pl-smi">PROJ_p1</span>
-  SOURCES="foo.ml main.ml"
+  SOURCES=foo.ml main.ml
   RESULT="p1"
   OCAMLFLAGS="-unsafe"
 <span class="pl-k">endef</span>
@@ -564,8 +564,14 @@ been defined appropriately):</p>
 * OCAMLMKTOP    - top-level compiler           (default: ocamlmktop)
 * OCAMLCP       - profiling byte-code compiler (default: ocamlcp)
 * OCAMLDEP      - dependency generator         (default: ocamldep)
+
 * OCAMLLEX      - scanner generator            (default: ocamllex)
+                  Applies to .mll files.
+
 * OCAMLYACC     - parser generator             (default: ocamlyacc)
+                  Applies to .mly files.  A good alternative to the default is
+                  "menhir" if installed.
+
 * OCAMLMKLIB    - tool to create libraries     (default: ocamlmklib)
 * CAMLIDL       - IDL-code generator           (default: camlidl)
 * CAMLIDLDLL    - IDL-utility                  (default: camlidldll)
@@ -642,7 +648,7 @@ contact me here: <a href="mailto:markus.mottl@gmail.com">markus.mottl@gmail.com<
 
 <p>Enjoy!</p>
 
-<p>Markus Mottl in Rutherford, NJ on July 10, 2012</p>
+<p>Markus Mottl in Rutherford, NJ on March 2, 2015</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mmottl/ocaml-makefile">Ocaml-makefile</a> is maintained by <a href="https://github.com/mmottl">mmottl</a>.</span>
