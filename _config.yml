@@ -1,0 +1,8 @@
+title: Ocaml-makefile
+description: Easy to use Makefile for small to medium-sized OCaml-projects
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-cayman
+
+gems:
+  - jekyll-mentions
