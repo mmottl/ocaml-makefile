@@ -1,15 +1,10 @@
-OCamlMakefile - A Simple Generic Makefile for [OCaml](http://www.ocaml.org)-Projects
-====================================================================================
+## OCamlMakefile - A Simple Generic Makefile for [OCaml](http://www.ocaml.org)-Projects
 
----------------------------------------------------------------------------
-
-Prerequisites
--------------
+### Prerequisites
 
   * GNU-Make version 3.80 or higher
 
-Pros
-----
+### Pros
 
   * It is well-tested across multiple platforms and has been used in many
     projects.
@@ -22,8 +17,7 @@ Pros
     `calc.ml`) need only little information to work correctly, sometimes
     just about the minimum (filenames of sources).
 
-Cons
-----
+### Cons
 
   * It may not be a good choice in projects where many compilation units
     require different flags.
@@ -36,12 +30,12 @@ Cons
     You may want to investigate the following tools to approach larger
     projects:
 
+      * [jbuilder](https://github.com/janestreet/jbuilder)
       * [OMake](http://omake.metaprl.org/index.html)
       * [Ocamlbuild](https://ocaml.org/learn/tutorials/ocamlbuild)
       * [Oasis](http://oasis.forge.ocamlcore.org)
 
-Usage
------
+### Usage
 
 It is recommended that first-time users take a look at the examples in the
 distribution for a quick introduction.  `OCamlMakefile`-projects are often so
@@ -259,7 +253,7 @@ If you want to write your own syntax extensions, just take a look at the
 example in the directory `camlp4`: it implements the "`repeat ... until`"
 extension as described in the `camlp4`-tutorial.
 
-### Library (Un-)Installation Support
+#### Library (Un-)Installation Support
 
 `OCamlMakefile` contains two targets using `ocamlfind` for this purpose:
 
@@ -284,7 +278,7 @@ Two other targets allow installation of files into a particular directory
   * `rawinstall`
   * `rawuninstall`
 
-### Building toplevels
+#### Building toplevels
 
 There is just one target for this:
 
@@ -293,7 +287,7 @@ There is just one target for this:
 The generated file can be used immediately for interactive sessions - even
 with scanners, parsers, C-files, etc.!
 
-### Generating documentation
+#### Generating documentation
 
 The following targets are supported:
 
@@ -311,7 +305,7 @@ is `doc/$(RESULT)/html` and for Latex, PostScript and PDF the directory
 `doc/$(RESULT)/latex`.  See the OCamldoc-manual for details and the optional
 variables below for settings you can control.
 
-### Handling subprojects
+#### Handling subprojects
 
 You can have several targets in the same directory and manage them from
 within an single `Makefile`.
@@ -372,7 +366,7 @@ been defined appropriately):
 
 See the `threads`-directory in the distribution for a short example!
 
-### Optional `OCamlMakefile` variables
+#### Optional `OCamlMakefile` variables
 
 ```text
 * LIB_PACK_NAME - packs all modules of a library into a module whose
@@ -590,24 +584,16 @@ See the `threads`-directory in the distribution for a short example!
                   SUBPROJS.
 ```
 
-### Optional variables for Windows users
+#### Optional variables for Windows users
 
 ```text
 * MINGW         - variable to detect the MINGW-environment
 * MSVC          - variable to detect the MSVC-compiler
 ```
 
----------------------------------------------------------------------------
+### Contact Information and Contributing
 
-Contact Information and Contributing
-------------------------------------
+Please submit bugs reports, feature requests, contributions and similar to
+the [GitHub issue tracker](https://github.com/mmottl/ocaml-makefile/issues).
 
-In the case of bugs, feature requests, contributions and similar, you can
-contact me here: <markus.mottl@gmail.com>
-
-Up-to-date information concerning this tool should be available at:
-<http://mmottl.github.io/ocaml-makefile>
-
-Enjoy!
-
-Markus Mottl in Rutherford, NJ on March 2, 2015
+Up-to-date information is available at: <https://mmottl.github.io/ocaml-makefile>
