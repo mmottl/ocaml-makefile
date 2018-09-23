@@ -30,7 +30,7 @@
     You may want to investigate the following tools to approach larger
     projects:
 
-      * [jbuilder](https://github.com/janestreet/jbuilder)
+      * [dune](https://github.com/ocaml/dune)
       * [OMake](http://omake.metaprl.org/index.html)
       * [Ocamlbuild](https://ocaml.org/learn/tutorials/ocamlbuild)
       * [Oasis](http://oasis.forge.ocamlcore.org)
