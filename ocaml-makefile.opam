@@ -1,7 +1,7 @@
-opam-version: "1.2"
+opam-version: "2.0"
 maintainer: "Markus Mottl <markus.mottl@gmail.com>"
 authors: [ "Markus Mottl <markus.mottl@gmail.com>" ]
 license: "LGPL-2.1+ with OCaml linking exception"
 homepage: "https://mmottl.github.io/ocaml-makefile"
-dev-repo: "https://github.com/mmottl/ocaml-makefile.git"
+dev-repo: "git://github.com/mmottl/ocaml-makefile"
 bug-reports: "https://github.com/mmottl/ocaml-makefile/issues"
