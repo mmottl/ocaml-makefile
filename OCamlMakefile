@@ -333,7 +333,7 @@ ifndef REAL_OCAMLFIND
   ifdef PACKS
     ifndef CREATE_LIB
       ifdef THREADS
-	PACKS += threads
+        PACKS += threads
       endif
     endif
     empty :=
@@ -1129,7 +1129,8 @@ endif
 			$(QUIET)if [ $(NOIDLHEADER) ]; then touch $*.h; fi
 
 %.$(EXT_OBJ):	%.c
-			$(OCAMLC) -c -cc "$(CC)" -ccopt "$(CFLAGS) \
+			$(REAL_OCAMLFIND) $(REAL_OCAMLC) $(THREAD_FLAG) $(OCAML_FIND_PACKAGES) \
+				-c -cc "$(CC)" $(INCFLAGS) -ccopt "$(CFLAGS) \
 				$(CPPFLAGS) $(CPPFLAGS_WIN32) \
 				$(CFLAGS_WIN32) $(CINCFLAGS) $(CFLAG_O)$@ " $<
 
