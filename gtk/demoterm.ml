@@ -9,6 +9,7 @@
 *)
 
 module String = StringLabels
+module Bytes = BytesLabels
 
 (* To start with, just create a subprocess and copy text back and forth
    to it. *)
@@ -50,7 +51,7 @@ let () =
            outch. *)
         let tosend = String.make 1 ch in
         text#buffer#insert tosend;
-        output outch tosend 0 1;
+        output_string outch tosend;
         flush outch in
       let rec loop pos =
         if not !closed && pos < String.length s then
@@ -78,11 +79,11 @@ let () =
   window#show ();
 
   let copyFromSubprocess () =
-    let buf = String.make buffer_size 'x' in
+    let buf = Bytes.make buffer_size 'x' in
     let rec copyLoop () =
-      let len = input inch buf 0 (String.length buf) in
+      let len = input inch buf 0 (Bytes.length buf) in
       if len > 0 then (
-        text#buffer#insert (String.sub buf ~pos:0 ~len);
+        text#buffer#insert Bytes.(to_string @@ sub buf ~pos:0 ~len);
         copyLoop ())
       else close_in inch in
     copyLoop () in
