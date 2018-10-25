@@ -1,4 +1,0 @@
-Generic Makefile for building OCaml projects
-
-OCamlMakefile supports a large variety of build target kinds for building small
-OCaml projects using GNU make.
