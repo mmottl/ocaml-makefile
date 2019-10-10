@@ -738,7 +738,7 @@ endif
 export MAKE_DEPS
 
 ifdef ANNOTATE
-  ANNOT_FLAG := -annot
+  ANNOT_FLAG := -annot -bin-annot
 else
 endif
 
