@@ -1,73 +1,73 @@
-## OCamlMakefile - A Simple Generic Makefile for [OCaml](http://www.ocaml.org)-Projects
+# OCamlMakefile - A Simple Generic Makefile for [OCaml](http://www.ocaml.org)-Projects
 
-### Prerequisites
+## Prerequisites
 
-  * GNU-Make version 3.80 or higher
+- GNU-Make version 3.80 or higher
 
-### Pros
+## Pros
 
-  * It is well-tested across multiple platforms and has been used in many
-    projects.
+- It is well-tested across multiple platforms and has been used in many
+  projects.
 
-  * It generates dependencies correctly by ensuring that all automatically
-    generated OCaml-files exist before dependency calculation.  This is the
-    only way to guarantee that `ocamldep` can do its job.
+- It generates dependencies correctly by ensuring that all automatically
+  generated OCaml-files exist before dependency calculation. This is the
+  only way to guarantee that `ocamldep` can do its job.
 
-  * Convenience.  Even fairly complex compilation processes (see example
-    `calc.ml`) need only little information to work correctly, sometimes
-    just about the minimum (filenames of sources).
+- Convenience. Even fairly complex compilation processes (see example
+  `calc.ml`) need only little information to work correctly, sometimes
+  just about the minimum (filenames of sources).
 
-### Cons
+## Cons
 
-  * It may not be a good choice in projects where many compilation units
-    require different flags.
+- It may not be a good choice in projects where many compilation units
+  require different flags.
 
-  * Though it can scale to medium-sized projects, large projects with,
-    for example, dependencies across multiple libraries in different
-    directories are not well-supported.
+- Though it can scale to medium-sized projects, large projects with,
+  for example, dependencies across multiple libraries in different
+  directories are not well-supported.
 
-    This is a general shortcoming of the already somewhat dated `make`.
-    You may want to investigate the following tools to approach larger
-    projects:
+  This is a general shortcoming of the already somewhat dated `make`.
+  You may want to investigate the following tools to approach larger
+  projects:
 
-      * [jbuilder](https://github.com/janestreet/jbuilder)
-      * [OMake](http://omake.metaprl.org/index.html)
-      * [Ocamlbuild](https://ocaml.org/learn/tutorials/ocamlbuild)
-      * [Oasis](http://oasis.forge.ocamlcore.org)
+  - [dune](https://github.com/ocaml/dune)
+  - [OMake](http://omake.metaprl.org/index.html)
+  - [Ocamlbuild](https://ocaml.org/learn/tutorials/ocamlbuild)
+  - [Oasis](http://oasis.forge.ocamlcore.org)
 
-### Usage
+## Usage
 
 It is recommended that first-time users take a look at the examples in the
-distribution for a quick introduction.  `OCamlMakefile`-projects are often so
+distribution for a quick introduction. `OCamlMakefile`-projects are often so
 simple that they are self-explanatory.
 
 To create your own project, first edit a project-specific `Makefile` in the
-appropriate directory.  There are two ways of making use of `OCamlMakefile`:
+appropriate directory. There are two ways of making use of `OCamlMakefile`:
 
-  1. Have a look at the default settings in `OCamlMakefile` and set
-     them to the values that are valid on your system.   For example, check
-     whether the path to the standard libraries is ok, what executables shall
-     be used, etc.  Copy it into the directory of the project to be compiled.
-     Add the following statement as last line to your `Makefile`:
+1. Have a look at the default settings in `OCamlMakefile` and set
+   them to the values that are valid on your system. For example, check
+   whether the path to the standard libraries is ok, what executables shall
+   be used, etc. Copy it into the directory of the project to be compiled.
+   Add the following statement as last line to your `Makefile`:
 
-     ```makefile
-     -include OCamlMakefile
-     ```
+   ```makefile
+   -include OCamlMakefile
+   ```
 
-  2. Put `OCamlMakefile` somewhere else in your system.  In this case you
-     will have to set the variable `OCAMLMAKEFILE` in your project-specific
-     `Makefile`.  This is the way in which the examples are written.  Now you
-     only need one version of `OCamlMakefile` to manage all of your projects!
-     See the examples for details.
+2. Put `OCamlMakefile` somewhere else in your system. In this case you
+   will have to set the variable `OCAMLMAKEFILE` in your project-specific
+   `Makefile`. This is the way in which the examples are written. Now you
+   only need one version of `OCamlMakefile` to manage all of your projects!
+   See the examples for details.
 
 You will usually need to specify two further variables for your project:
 
-  * `SOURCES`  (default: `foo.ml`)
-  * `RESULT`   (default: `foo`)
+- `SOURCES` (default: `foo.ml`)
+- `RESULT` (default: `foo`)
 
-Put all the sources necessary for a target into variable `SOURCES`.  Then set
-`RESULT` to the name of the target.  If you want to generate libraries,
-you should _not_ specify the suffix (`.cma`, `.cmxa`, `.a`).  It will be
+Put all the sources necessary for a target into variable `SOURCES`. Then set
+`RESULT` to the name of the target. If you want to generate libraries,
+you should _not_ specify the suffix (`.cma`, `.cmxa`, `.a`). It will be
 added automatically if you specify that you want to build a library.
 
 ```text
@@ -76,9 +76,9 @@ added automatically if you specify that you want to build a library.
 ```
 
 The order is important, because it matters during linking due to potential
-side effects caused at program startup.  This is why `OCamlMakefile` does not
+side effects caused at program startup. This is why `OCamlMakefile` does not
 attempt to partially order dependencies by itself, which might confuse users
-even more.  It just compiles and links OCaml-sources in the order specified
+even more. It just compiles and links OCaml-sources in the order specified
 by the user, even if it could determine automatically that the order cannot
 be correct.
 
@@ -100,11 +100,11 @@ RESULT  = foo
 -include OCamlMakefile
 ```
 
-Be careful with the names you put into these variables.  If they are wrong,
+Be careful with the names you put into these variables. If they are wrong,
 a `make clean` might erase the wrong files!
 
-A simple `make` will generate a byte-code executable.  If you want to change
-this, you may add an `all`-rule that generates something else.  For example:
+A simple `make` will generate a byte-code executable. If you want to change
+this, you may add an `all`-rule that generates something else. For example:
 
 ```makefile
 SOURCES = foo.ml
@@ -118,7 +118,7 @@ all: native-code-library
 This will build a native-code library `foo.cmxa` (+ `foo.a`) from file
 `foo.ml`.
 
-You may even build several targets at once.  To produce byte- and native-code
+You may even build several targets at once. To produce byte- and native-code
 executables with one `make`, add the following rule:
 
 ```makefile
@@ -126,11 +126,11 @@ all: byte-code native-code
 ```
 
 You will probably want to use a different suffix for each of these targets
-so that the result will not be overwritten.  See the optional variables
+so that the result will not be overwritten. See the optional variables
 below for details.
 
 You may also tell `make` at the command-line what kind of target to produce
-(e.g. `make nc`).  Here all the possibilities with shortcuts between
+(e.g. `make nc`). Here all the possibilities with shortcuts between
 parenthesis:
 
 ```text
@@ -163,71 +163,71 @@ with C-files:
 > your include path if you link your library against an executable.
 >
 > It is sometimes more convenient to link all C-object files into a
-> single C-library.  Then you have to override the automatic link flags
+> single C-library. Then you have to override the automatic link flags
 > of your library using `-noautolink` and add another link flag that
 > links in your C-library explicitly.
 
 Concerning maintenance:
 
-  * `make clean` removes all (all!) automatically generated files.
-    So again, make sure your variables are ok!
+- `make clean` removes all (all!) automatically generated files.
+  So again, make sure your variables are ok!
 
-  * `make cleanup` is similar to `make clean` but keeps executables.
+- `make cleanup` is similar to `make clean` but keeps executables.
 
 Another way to destroy some important files is by having `OCamlMakefile`
-automatically generate files with the same name.  Read the documentation about
+automatically generate files with the same name. Read the documentation about
 the tools in the OCaml-distribution to see what kind of files are generated.
 `OCamlMakefile` additionally generates (`%` is the basename of source file):
 
-  * `%_idl.c` - `camlidl` generates a file `%.c` from `%.idl`, but this is
-    not such a good idea, because when generating native-code, both the
-    file `%.c` and `%.ml` would generate files `%.o` which would overwrite
-    each other.  Thus, `OCamlMakefile` renames `%.c` to `%_idl.c` to work
-    around this problem.
+- `%_idl.c` - `camlidl` generates a file `%.c` from `%.idl`, but this is
+  not such a good idea, because when generating native-code, both the
+  file `%.c` and `%.ml` would generate files `%.o` which would overwrite
+  each other. Thus, `OCamlMakefile` renames `%.c` to `%_idl.c` to work
+  around this problem.
 
 The dependencies are stored in three different subdirectories (dot dirs):
 
-  * `._d` - contains dependencies for .ml-files
-  * `._bcdi` - contains byte code dependencies for .mli-files
-  * `._ncdi` - contains native code dependencies for .mli-files
+- `._d` - contains dependencies for .ml-files
+- `._bcdi` - contains byte code dependencies for .mli-files
+- `._ncdi` - contains native code dependencies for .mli-files
 
 The endings of the dependency files are: `%.d` for those generated from
 `%.ml`-files and `%.di` for ones derived from `%.mli`-files.
 
-### Debugging
+## Debugging
 
 This is easy: if you discover a bug, just do a `make clean; make dc` to
-recompile your project with debugging information.  Then you can immediately
+recompile your project with debugging information. Then you can immediately
 apply `ocamldebug` to the executable.
 
-### Profiling
+## Profiling
 
 To generate code that can be profiled with `ocamlprof` (byte code) or `gprof`
 (native code), compile your project with one of the profiling targets (see
-targets above).  E.g.:
+targets above). E.g.:
 
-  * `make pbc` will build byte code that can be profiled with `ocamlprof`.
-  * `make pnc` will build native code that can be profiled with `gprof`.
+- `make pbc` will build byte code that can be profiled with `ocamlprof`.
+- `make pnc` will build native code that can be profiled with `gprof`.
 
 Please note that it is not currently possible to profile byte code with
-threads.  `OCamlMakefile` will force an error if you try to do this.
+threads. `OCamlMakefile` will force an error if you try to do this.
 
 A short hint for DEC Alpha-users (under Digital Unix): you may also compile
 your sources to native code without any further profiling options/targets.
-Then call `pixie my_exec`, `my_exec` being your executable.  This will produce
-(among other files) an executable `my_exec.pixie`.  Call it and it will produce
+Then call `pixie my_exec`, `my_exec` being your executable. This will produce
+(among other files) an executable `my_exec.pixie`. Call it and it will produce
 profiling information which can be analyzed using `prof -pixie my_exec`.
 The resulting information is extremely detailed and allows analysis up to
 the clock cycle level...
 
-### Using Preprocessors
+## Using Preprocessors
 
 Because any kind of program that reads from standard input and prints to
 standard output can be used as a preprocessor, there cannot be any default
 way to handle all of them correctly without further knowledge.
 
 Therefore, you have to cooperate a bit with `OCamlMakefile` to let
-preprocessing happen automatically.  Basically, this only requires that you
+preprocessing happen automatically. Basically, this only requires that you
 put a comment into the first line of files that should be preprocessed, e.g.:
 
 ```ocaml
@@ -253,41 +253,41 @@ If you want to write your own syntax extensions, just take a look at the
 example in the directory `camlp4`: it implements the "`repeat ... until`"
 extension as described in the `camlp4`-tutorial.
 
-#### Library (Un-)Installation Support
+## Library (Un-)Installation Support
 
 `OCamlMakefile` contains two targets using `ocamlfind` for this purpose:
 
-  * `libinstall`
-  * `libuninstall`
+- `libinstall`
+- `libuninstall`
 
 These two targets require the existence of the variable `LIBINSTALL_FILES`,
 which should be set to all the files that you want to install in the
 library directory (usually %.mli, %.cmi, %.cma, %.cmxa, %.a and possibly
-further C-libraries).  The target `libinstall` has the dependency `all`
+further C-libraries). The target `libinstall` has the dependency `all`
 to force compilation of the library so make sure you define target `all`
 in your Makefile appropriately.
 
 The targets inform the user about the configured install path and ask for
-confirmation to (un)install there.  If you want to use them, it is often a
+confirmation to (un)install there. If you want to use them, it is often a
 good idea to just alias them in your Makefile to `install` and `uninstall`
 respectively.
 
 Two other targets allow installation of files into a particular directory
 (without using `ocamlfind`):
 
-  * `rawinstall`
-  * `rawuninstall`
+- `rawinstall`
+- `rawuninstall`
 
-#### Building toplevels
+## Building toplevels
 
 There is just one target for this:
 
-  * `top`
+- `top`
 
 The generated file can be used immediately for interactive sessions - even
 with scanners, parsers, C-files, etc.!
 
-#### Generating documentation
+## Generating documentation
 
 The following targets are supported:
 
@@ -300,19 +300,19 @@ doc        - generates all supported forms of documentation
 clean-doc  - generates all supported forms of documentation
 ```
 
-All of them generate a sub-directory `doc`.  More precisely, for HTML it
+All of them generate a sub-directory `doc`. More precisely, for HTML it
 is `doc/$(RESULT)/html` and for Latex, PostScript and PDF the directory
-`doc/$(RESULT)/latex`.  See the OCamldoc-manual for details and the optional
+`doc/$(RESULT)/latex`. See the OCamldoc-manual for details and the optional
 variables below for settings you can control.
 
-#### Handling subprojects
+## Handling subprojects
 
 You can have several targets in the same directory and manage them from
 within an single `Makefile`.
 
-Give each subproject a name, e.g. `p1`, `p2`, etc.  Then you export settings
+Give each subproject a name, e.g. `p1`, `p2`, etc. Then you export settings
 specific to each project by using variables of the form `PROJ_p1`, `PROJ_p2`,
-etc.  E.g.:
+etc. E.g.:
 
 ```makefile
 define PROJ_p1
@@ -335,7 +335,7 @@ export THREADS = y
 ```
 
 Now is a good time to define which projects should be affected by commands
-by default.  E.g.:
+by default. E.g.:
 
 ```makefile
 ifndef SUBPROJS
@@ -345,7 +345,7 @@ endif
 
 This will automatically generate a given target for all those subprojects
 if this variable has not been defined in the shell environment or in the
-command line of the make-invocation by the user.  E.g., `make dc` will
+command line of the make-invocation by the user. E.g., `make dc` will
 generate debug code for all subprojects.
 
 Now you need to define a default action for your subprojects if `make`
@@ -358,15 +358,15 @@ all: bc
 This will build byte code by default for all subprojects.
 
 Finally, you'll have to define a catch-all target that uses the target provided
-by the user for all subprojects.  Just add (assuming that OCAMLMAKEFILE has
+by the user for all subprojects. Just add (assuming that OCAMLMAKEFILE has
 been defined appropriately):
 
-  %:
-          @make -f $(OCAMLMAKEFILE) subprojs SUBTARGET=$@
+%:
+@make -f $(OCAMLMAKEFILE) subprojs SUBTARGET=$@
 
 See the `threads`-directory in the distribution for a short example!
 
-#### Optional `OCamlMakefile` variables
+## Optional `OCamlMakefile` variables
 
 ```text
 * LIB_PACK_NAME - packs all modules of a library into a module whose
@@ -584,14 +584,14 @@ See the `threads`-directory in the distribution for a short example!
                   SUBPROJS.
 ```
 
-#### Optional variables for Windows users
+## Optional variables for Windows users
 
 ```text
 * MINGW         - variable to detect the MINGW-environment
 * MSVC          - variable to detect the MSVC-compiler
 ```
 
-### Contact Information and Contributing
+## Contact Information and Contributing
 
 Please submit bugs reports, feature requests, contributions and similar to
 the [GitHub issue tracker](https://github.com/mmottl/ocaml-makefile/issues).
