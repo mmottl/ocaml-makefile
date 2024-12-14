@@ -1,3 +1,5 @@
+# Changelog
+
 ## 6.39.2 (2018-10-25)
 
 - Improved OPAM package for dune-release
