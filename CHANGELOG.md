@@ -1,16 +1,22 @@
 # Changelog
 
-## 6.39.2 (2018-10-25)
+## [6.39.2] - 2018-10-25
 
-- Improved OPAM package for dune-release
+### Improved
 
-## 6.39.1 (2018-09-23)
+- OPAM package for dune-release.
 
-- Fixed packaging for OPAM 2.0.0
+## [6.39.1] - 2018-09-23
 
-## 6.39.0 (2017-08-02)
+### Fixed
 
-- Switched to jbuilder and topkg
+- Packaging for OPAM 2.0.0.
+
+## [6.39.0] - 2017-08-02
+
+### Changed
+
+- Switched to jbuilder and topkg.
 
 ## Changes Before Version 6.39.0
 
